@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    <title>Camera Vintage</title>
+</head>
+<body class="container">
+    <head>
+        <div><a href="index.html">Ori'Cam</a></div>
+        <nav>
+            
+            <a href="basket.html">Panier</a>
+        </nav>
+    </head>
+    <div>
+        <div class="card" style="width: 18rem;">
+            <img src="http://localhost:3000/images/vcam_1.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p>499.00 EUR</p>
+              <a href="#" class="btn btn-primary">Choisir</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="http://localhost:3000/images/vcam_2.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p>3099.00 EUR</p>
+              <a href="#" class="btn btn-primary">Choisir</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="http://localhost:3000/images/vcam_3.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p>2099.00 EUR</p>
+              <a href="#" class="btn btn-primary">Choisir</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="http://localhost:3000/images/vcam_4.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p>1599.00 EUR</p>
+              <a href="#" class="btn btn-primary">Choisir</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <img src="http://localhost:3000/images/vcam_5.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p>599.00 EUR</p>
+              <a href="#" class="btn btn-primary">Choisir</a>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+    <script type="text/javascript" src="/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script src="./dist/polyfill.bundle.js"></script>
+    <script src="./dist/app.bundle.js"></script>
+    <script type="text/javascript">
+    /* window est la fenetre du navigateur on load est un evenement qui est declanché au chargement de la page  qui appele la fonction*/
+        window.onload = function() {
+            fetch("http://localhost:3000/api/cameras")
+            .then(function(res) {
+                res.body.read().then(({ done, value }) => {
+          // When no more data needs to be consumed, close the stream
+              console.log(done);
+              console.log(value);
+        });
+            if (res.ok) {
+                return res.json();
+            }
+            })
+            .then(function(res) {
+            document
+                .getElementById("card-title")
+                .innerText = res.name;
+            })
+            .catch(function(err) {
+            // Une erreur est survenue
+            });
+        }
+    </script>
+</body>
+</html>
