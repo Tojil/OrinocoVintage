@@ -65,6 +65,11 @@ footer h5 {
     color: white;
 }
 
+#footer_paiement i {
+    color: white;
+    font-size: 25px;
+}
+
 a {
     text-decoration: none;
     color: white;
@@ -72,8 +77,20 @@ a {
 
 .footer_div_centrale {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    max-width: 1280px;
+    margin: 0 auto;
+    margin-top: 25px;
+}
+
+.footer__section {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    padding: 0px 10px;
+    margin-top: 30px;
+    margin-left: 30px;
 }
 
 header {
