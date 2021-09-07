@@ -1,0 +1,105 @@
+
+.bg-banniere {
+    position: relative;
+    object-fit: cover;
+    margin: auto;
+    width: 968px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+#oricam__h1, 
+#oricam__h2 {
+    color: black;
+    text-shadow: rgb(255, 255, 255) 0em -0.05em 0.05em;
+    position: absolute;
+    
+}
+
+#oricam__h1 {
+    font-size: 2.5rem;
+    left: 1rem;
+}
+
+#oricam__h2 {
+    font-size: 6rem;
+    top: 13rem;
+    left: 2rem;
+}
+
+body {
+    margin: auto;
+}
+
+.container-fluid {
+    padding: 0px;
+    background-color: black;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Dancing Script', cursive;
+}
+
+p {
+    font-family: 'Comfortaa', cursive;
+}
+
+
+#camera-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: black;
+}
+
+.card {
+    margin: 20px;
+}
+
+footer {
+    background-color: black;
+}
+
+footer h5 {
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.footer_div_centrale {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+header {
+    padding-top: 2rem;
+    margin-bottom: 3rem;
+    height: 50px;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+header i {
+    color: white;
+    font-size: 25px;
+    margin-right: 10px;
+}
+
+.oricam {
+    font-family: 'Dancing Script', cursive;
+    color: white;
+    font-size: 30px;
+}
+
+.panier {
+    font-family: 'Comfortaa', cursive;
+    color: white;
+    font-size: 20px;
+}
