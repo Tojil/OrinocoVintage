@@ -16,12 +16,13 @@
 </head>
 <body class="container-fluid">
     <header class="into-header">
-        <div><a href="index.html" class="oricam">Ori'Cam</a></div>
+    </header>
+        <!--div><a href="index.html" class="oricam">Ori'Cam</a></div>
         <nav>
             <i class="fa-solid fa-basket-shopping"></i>
             <a href="basket.html" class="panier">panier</a>
-        </nav>
-    </header>
+        </nav-->
+    
     <section class="bg-banniere">
         <h1 id="oricam__h1">Ori'Cam</h1>
         <h2 id="oricam__h2">Pour toujours</h2>
@@ -75,15 +76,16 @@
         </div>
     </footer>
     <script src="https://kit.fontawesome.com/a0287b3502.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
     <script src="./dist/polyfill.bundle.js"></script>
     <script src="./dist/app.bundle.js"></script>
     <script type="text/javascript">
         /* window est la fenetre du navigateur, onload est un evenement qui est declanché au chargement de la page  qui appele la fonction() */
         window.onload = function() {
-            console.log("hello")
+            console.log("hello");
             getAllCameras();
+            getHeader();
         }
     </script>
 </body>
