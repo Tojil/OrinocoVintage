@@ -1,3 +1,6 @@
+html, body {
+    background-color: black;
+}
 
 .bg-banniere {
     position: relative;
@@ -79,7 +82,7 @@ a {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    max-width: 1280px;
+    max-width: 1680px;
     margin: 0 auto;
     margin-top: 25px;
 }
@@ -96,7 +99,7 @@ a {
 header {
     padding-top: 2rem;
     margin-bottom: 3rem;
-    height: 50px;
+    height: 100px;
     background-color: black;
     display: flex;
     flex-direction: row;
@@ -119,4 +122,56 @@ header i {
     font-family: 'Comfortaa', cursive;
     color: white;
     font-size: 20px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 1024px;
+    margin: auto;
+    background-color: black;
+    color: white;
+}
+
+#sectionbloc {
+    width: 90%;
+}
+.articles-titre {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    min-width: 310px;
+    width: 100%;
+    border: 2px solid rgb(124, 5, 5);
+}
+
+#liste-panier {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch§;
+    height: auto;
+    min-height: 120px;
+    width: 100%;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    border: 2px solid rgb(124, 5, 5);
+    box-shadow: 0 0 25px rgb(248, 245, 245);
+}
+
+#sectionFormulaire {
+    width: 80%;
+    min-width: 320px;
+    margin: 25px auto;
+} 
+
+#contact {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 310px;
+    margin: 25px auto 0 auto;
 }

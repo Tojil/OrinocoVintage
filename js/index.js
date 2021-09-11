@@ -22,7 +22,7 @@ function getAllCameras() {
                             <h3 class="card-title">${value[i].name}</h3>
                             <p class="card-text">${value[i].description}</p>
                             <p>${value[i].price} EUR</p>
-                            <a href="product.html" class="btn btn-primary">Choisir</a>
+                            <a href="./html/product.html" class="btn btn-primary">Choisir</a>
                             </div>
                           </div>
                         </div>`
@@ -35,13 +35,3 @@ function getAllCameras() {
     })
 }
 
-function getHeader() {
-  let headerOricam = document.getElementsByClassName("into-header")
-  headerOricam.innerHTML =  `<div>
-                             <a href="index.html" class="oricam">Ori'Cam</a>
-                             <nav>
-                             <i class="fa-solid fa-basket-shopping"></i>
-                             <a href="basket.html" class="panier">panier</a>
-                             </nav>
-                             </div>`;
-}

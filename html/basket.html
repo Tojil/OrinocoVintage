@@ -15,8 +15,65 @@
     <title>Panier</title>
 </head>
 <body class="container">
-    <header class="into-header"></header>
-    <div></div>
+    <header class="into-header">
+        <div><a href="../index.html" class="oricam"><h1>Ori'Cam</h1></a></div>
+        <nav>
+            <i class="fa-solid fa-basket-shopping"></i>
+            <a href="/html/basket.html" class="panier">panier</a>
+        </nav>
+    </header>
+        <main>
+            <div id="sectionbloc">
+                <section id="sectionArticles">
+                    <h2 class="panier-art-titre">Votre panier</h2>
+                    <div id="liste-panier">
+                        <div class="articles-titre">
+                            <div>NOM</div>
+                            <div>COULEUR</div>
+                            <div>PRIX</div>
+                        </div>
+                        <div class="paniervide">Votre panier est vide <i class="far fa-frown"></i></div>
+                        
+                        <!-- Espace dynamique -->
+                        
+                    </div>
+                    <div id="panierTotaux">
+    
+                        <!-- Espace dynamique -->
+    
+                    <div><span>TOTAL :</span><span class="totalPanierN">0 €</span></div></div>
+                </section>
+    
+                <section id="sectionFormulaire">
+                    <h2 class="">Vos informations</h2>
+    
+                    <form id="contact">
+                        <label for="firstName">Prénom :</label>
+                        <input id="firstName" type="text" name="firstName" placeholder="Prénom" class="">
+                        <div id="firstN" class="cache">2 caractères minimum sans chiffres</div>
+    
+                        <label for="lastName">Nom :</label>
+                        <input id="lastName" type="text" name="lastName" placeholder="Nom" class="">
+                        <div id="lastN" class="cache">2 caractères minimum sans chiffres</div>
+    
+                        <label for="address">Adresse :</label>
+                        <input id="address" type="text" name="address" placeholder="Adresse" class="">
+                        <div id="addrS" class="cache"> 2 caractères minimum</div>
+    
+                        <label for="city">Ville :</label>
+                        <input id="city" type="text" name="city" placeholder="Ville" class="">
+                        <div id="citY" class="cache">2 caractères minimum sans chiffre</div>
+    
+                        <label for="email">Mail :</label>
+                        <input id="email" type="text" name="email" placeholder="Email" class="">
+                        <div id="emaiL" class="cache">Email incorrecte format d'email : text@texte.text</div>
+    
+                        <button>Commander</button>
+                        <a href="index.html" class="retour text-center">Continuez vos achats</a>
+                    </form>
+                </section>
+            </div>
+        </main>
     <footer class="container-fluid">
         <div class="footer_div_centrale">
             <section class="footer__section">
@@ -59,7 +116,8 @@
             <p><i class="far fa-copyright"></i>2021 - Tous droits réservés - Orinoco & filiales </p>
         </div>
     </footer>
-    <script type="text/javascript" src="/js/basket.js"></script>
+    <script src="https://kit.fontawesome.com/a0287b3502.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../js/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
     <script src="./dist/polyfill.bundle.js"></script>
     <script src="./dist/app.bundle.js"></script>
