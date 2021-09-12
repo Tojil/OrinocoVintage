@@ -11,6 +11,9 @@ html, body {
     display: flex;
     justify-content: center;
 }
+
+/* accueil debut */
+
 #oricam__h1, 
 #oricam__h2 {
     color: black;
@@ -118,6 +121,11 @@ header i {
     font-size: 30px;
 }
 
+/* accueil fin */
+
+/* Panier debut */
+
+
 .panier {
     font-family: 'Comfortaa', cursive;
     color: white;
@@ -175,3 +183,21 @@ main {
     min-width: 310px;
     margin: 25px auto 0 auto;
 }
+
+/* Panier fin */
+
+/* produit debut */
+
+.article {
+    flex-direction: column;
+    height: 100%;
+}
+
+#article-img {
+    height: 450px;
+    margin: 0 auto;
+}
+
+
+
+/* produit fin */
