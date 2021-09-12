@@ -30,8 +30,24 @@ function getAllCameras() {
       contain.appendChild()
       console.log(value)
     })
+
     .catch(function(err) {
     // Une erreur est survenue
     })
 }
+
+// Code pour le Produit dans product.html
+
+function getProduct() {
+  let i = getAllCameras.value[i]
+  .then(function(i){
+    if (i = 0) {
+      
+    }
+  })
+
+
+}
+
+// Code pour le Panier dans basket.html
 
