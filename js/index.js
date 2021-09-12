@@ -1,3 +1,10 @@
+//<!-- window est la fenetre du navigateur, onload est un evenement qui est declanché au chargement de la page  qui appele la fonction() -->
+window.onload = function() {
+  console.log("hello");
+  getAllCameras();
+  getHeader();
+}
+
 // Dans index.html appel reseaux et affichage des cameras
 
 let contain = document.getElementById("camera-container")
@@ -36,18 +43,19 @@ function getAllCameras() {
     })
 }
 
-// Code pour le Produit dans product.html
+// debut Code pour le Produit dans product.html
 
 function getProduct() {
-  let i = getAllCameras.value[i]
+  let produitId = getAllCameras.value[i].id
   .then(function(i){
     if (i = 0) {
-      
+
     }
   })
 
 
 }
 
+// Fin code produit
 // Code pour le Panier dans basket.html
 
