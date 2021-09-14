@@ -15,12 +15,14 @@
     <title>Camera Vintage</title>
 </head>
 <body class="container-fluid">
-    <header class="into-header">
+    <header>
+        <div class="into-header">
         <div><a src="index.html" class="oricam"><h1>Ori'Cam</h1></a></div>
         <nav>
             <i class="fa-solid fa-basket-shopping"></i>
             <a href="./html/basket.html" class="panier">panier</a>
         </nav>
+        </div>
     </header>
     <section class="bg-banniere">
         <h2 id="oricam__h1">Ori'Cam</h2>
@@ -80,6 +82,7 @@
     <script src="./dist/polyfill.bundle.js"></script>
     <script src="./dist/app.bundle.js"></script>
     <script type="text/javascript">
+    //<!-- window est la fenetre du navigateur, onload est un evenement qui est declanché au chargement de la page  qui appele la fonction() -->
         window.onload = function() {
         console.log("hello");
         getAllCameras();
