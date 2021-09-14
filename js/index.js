@@ -8,11 +8,13 @@ let contain = document.getElementById("camera-container")
 function getAllCameras() {
     fetch("http://localhost:3000/api/cameras")
     .then(function(res) {
+      console.log(res)
       if (res.ok) {
         return res.json();
       }
     })
     .then(function(value) {
+      console.log(value)
       let nbOfValue = value.length
       console.log(nbOfValue)
       for(let i = 0; i < nbOfValue; i++) {
@@ -45,14 +47,13 @@ function getAllCameras() {
 let containMain = document.getElementById("mainArticle")
 
 function getProduct() {
-  let produitId = getAllCameras.value[i].id
-  .then(function(i){
-    if (i = 0) {
-
+  fetch("http://localhost:3000/api/cameras")
+  .then(function(res) {
+    console.log(res)
+    if (res.ok) {
+      return res.json();
     }
   })
-
-
 }
 
 // Fin code produit
