@@ -184,6 +184,70 @@ main {
     margin: 25px auto 0 auto;
 }
 
+.cache {
+    display: none;
+}
+
+#firstN, #lastN, #addrS, #citY, #emaiL {
+    color: rgb(240, 64, 64);
+    height: auto;
+    width: max-content;
+}
+
+input {
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.1em;
+    height: 50px;
+    width: 100%;
+    min-width: 310px;
+    margin: 55px auto 0 auto;
+    outline: none;
+    padding-left: 130px;
+    border: 2px solid #111827;
+    border-radius: 6px;
+}
+
+label{
+    z-index: 1000;
+    color: black;
+    align-self: flex-start;
+    font-size: 1em;
+    letter-spacing: .10em;
+    font-weight: 600;
+    padding-left: 10px;
+    margin-top: 25px;
+    margin-bottom: -92px;
+}
+
+button {
+    margin-top: 25px;
+    height: 50px;
+    width: 200px;
+    background-color: #c1b0f5;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 800;
+    box-shadow: 0 0 10px rgb(0 0 0 / 30%);
+}
+
+.nb-articles {
+    font-family: 'Comfortaa', cursive;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    font-weight: 600;
+    color: white;
+    background-color: #ff4931;
+    line-height: 20px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    left: -12px;
+    bottom: -10px;
+}
+
 /* Panier fin */
 
 /* produit debut */
