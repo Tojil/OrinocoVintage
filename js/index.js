@@ -12,7 +12,7 @@ let contain = document.getElementById("camera-container")
 function getAllCameras() {
     fetch("http://localhost:3000/api/cameras")
     .then(function(res) {
-      console.log(res)
+    //   console.log(res)
       if (res.ok) {
         return res.json();
       }
@@ -31,8 +31,8 @@ function getAllCameras() {
                           <div class="card-body">
                             <h3 class="card-title">${value[i].name}</h3>
                             <p class="card-text">${value[i].description}</p>
-                            <p>${relPrice / 100}.00 EUR</p>
-                            <a href="./html/product.html" class="btn btn-primary" id="${value[i]._id}" class="lien">Choisir</a>
+                            <p>${(relPrice / 100).toFixed(2)} EUR</p>
+                            <a href="./html/product.html?id=${value[i]._id}" class="btn btn-primary" id="${value[i]._id}" class="lien">Choisir</a>
                             </div>
                           </div>
                         </div>`
@@ -281,8 +281,8 @@ mainArticle()
 function mainArticle() {
 
     const urlWindow = window.location.search;
-    let idArticle = urlWindow.slice(1);
-    let urlArticle = `http://localhost:3000/api/cameras` + idArticle;
+    let idArticle = urlWindow.slice(0);
+    let urlArticle = `http://localhost:3000/api/cameras`;
 
     const mainArticle = document.querySelector("#mainArticle");
 
