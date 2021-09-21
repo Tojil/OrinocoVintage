@@ -1,5 +1,3 @@
-const { query } = require("express")
-
 getAllCameras()
 getProduit()
 
@@ -47,7 +45,7 @@ function getAllCameras() {
 
 // debut Code pour le Produit dans product.html
 
-let mainArticle = document.querySelector("#mainArticle")
+let mainArticle = document.getElementsById("mainArticle")
 
 function getProduit() {
     fetch("http://localhost:3000/api/cameras")
@@ -80,7 +78,7 @@ function getProduit() {
                             </div>
                             </div>` 
         }
-        contain.appendChild()
+        mainArticle.appendChild()
         console.log(value)
     })
         .catch(function(err) {
