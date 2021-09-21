@@ -43,10 +43,9 @@ function getAllCameras() {
     })
 }
 
-// debut Code pour le Produit dans product.html
+// Debut Produit dans product.html
 
 let mainArticle = document.getElementsById("mainArticle")
-
 function getProduit() {
     fetch("http://localhost:3000/api/cameras")
     .then(function(res) {
@@ -85,3 +84,9 @@ function getProduit() {
         // Une erreur est survenue
     })
 }
+
+// Fin Produit
+
+// Debut creation panier
+
+// Fin Panier
