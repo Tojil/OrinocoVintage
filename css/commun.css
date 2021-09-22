@@ -262,6 +262,22 @@ button {
     margin: 0 auto;
 }
 
+.card-title, .card-text, .card-price {
+    color: black;
+}
 
+a.retour {
+    margin: auto;
+    z-index: 1000;
+    color: #acaaaa;
+    display: block;
+    height: 50px;
+    width: 200px;
+    border-radius: 30px;
+    font-weight: 600;
+    line-height: 50px;
+    border: 1px solid #acaaaa;
+    margin-bottom: 25px;
+}
 
 /* produit fin */
