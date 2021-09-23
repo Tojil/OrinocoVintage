@@ -124,9 +124,8 @@ function getProduit() {
 
       const buttonSendPanier = document.querySelector("button");
       buttonSendPanier.addEventListener("click", function(event) {
-        event.preventDefault();
-      
-
+        
+      event.preventDefault();
       
       panier.push(produits)
 
