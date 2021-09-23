@@ -103,22 +103,22 @@ function getProduit() {
       function createPanier() {
 
         let panier = []
-        panier.push("selectedCamera")
+        panier.push(selectedCamera)
         localStorage.setItem("panierKey", selectedCamera)
 
         if (localStorage.getItem('panierKey') == null) {
-            let panierArrayStr = JSON.stringify(panierArray);
+            let panierArrayStr = JSON.stringify(panier);
             localStorage.setItem("panierKey", panierArrayStr);
         }
       }
 
-      function Cameras(name,lense,price) {
+      function Camera(name,lense,price) {
         this.name = name,
         this.lense = lense,
         this.price = price
       }
 
-      let produits = new Cameras(selectedCamera.name, selectedCamera.lenses[0], selectedCamera.price);
+      let produits = new Camera(selectedCamera.name, selectedCamera.lenses[0], selectedCamera.price);
 
       })
 
