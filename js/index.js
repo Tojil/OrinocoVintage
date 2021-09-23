@@ -43,12 +43,7 @@ function getAllCameras() {
     })
 }
 
-// Debut Produit dans product.html
-
-
-
-//let chosenProduct = document.getAllCameras()._id
-//console.log(chosenProduct)
+// Debut Produit dans product.html 
 
 function getProduit() {
   let queryParams = window.location.search.substr(1).split("&");
@@ -90,6 +85,8 @@ function getProduit() {
       //  mainArticle.appendChild()
       addLenses()
       ajoutAuPanier()
+      tableOfProducts()
+      createPanier()
       // Ajout des lenses dans les cameras
       function addLenses() {
 
@@ -101,43 +98,56 @@ function getProduit() {
         };
       }
 
-      function ajoutAuPanier() {
+      // Debut Création de Panier
 
-        const buttonSendPanier = document.querySelector("button");
+      function createPanier() {
 
-        buttonSendPanier.addEventListener("click", function(event) {
+        let panier = []
+        panier.push("selectedCamera")
+        localStorage.setItem("panierKey", selectedCamera)
 
-            event.preventDefault();
+        if (localStorage.getItem('panierKey') == null) {
+            let panierArrayStr = JSON.stringify(panierArray);
+            localStorage.setItem("panierKey", panierArrayStr);
+        }
+      }
 
-            const nameArticleChoisi = document.querySelector("h3");
-            const urlArticleChoisi = window.location.search;
-            const lensesChoisi = document.querySelector("#lenses");
-            const prixArticleChoisi = document.querySelector(".card-price");
-            
-            const articleChoisi = {
-                name: nameArticleChoisi.textContent,
-                id: urlArticleChoisi.slice(1),
-                color: lensesChoisi.options[lensesChoisi.selectedIndex].text,
-                price: prixArticleChoisi.textContent
-            };
+      function Cameras(name,lense,price) {
+        this.name = name,
+        this.lense = lense,
+        this.price = price
+      }
 
-            const stringArticleChoisi = JSON.stringify(articleChoisi)
+      let produits = new Cameras(selectedCamera.name, selectedCamera.lenses[0], selectedCamera.price);
 
-            let getPanier = localStorage.getItem("panierKey");
+      })
 
-            let numGetPanier = JSON.parse(getPanier);
+      const buttonSendPanier = document.querySelector("button");
+      buttonSendPanier.addEventListener("click", function(event) {
+        event.preventDefault();
+      
 
-            numGetPanier.push(stringArticleChoisi);
+      
+      panier.push(produits)
 
-            let strNumGetPanier = JSON.stringify(numGetPanier);
-
-            localStorage.setItem("panierKey", strNumGetPanier);
-
-            indicateurNbArticlePanier()
-        }) 
-    }
+      function tableOfProducts() {
+        let listOfProducts = ``;
+        camerasSelected.forEach(prod => 
+          listOfProducts += `
+          <div class="articles-titre">
+          <div>NOM</div>
+          <div>COULEUR</div>
+          <div>PRIX</div>
+          </div>
+          <tr class="text-center">
+            <td class="w-25 align-middle">${prod.name}</td>
+            <td class="w-25 align-middle">${prod.lense}</td>
+            <td class="w-25 align-middle">${prod.price}</td>
+          `
+          )
+          document.getElementsById("liste-panier").innerHTML = listOfProducts
+      }
     })
-
         .catch(function(err) {
         // Une erreur est survenue
     })
@@ -145,15 +155,6 @@ function getProduit() {
 
 // Fin Produit
 
-// Debut Création de Panier
-function createPanier() {
 
-  if (localStorage.getItem('panierKey') == null) {
-      
-      let panierArray = [];
-      let panierArrayStr = JSON.stringify(panierArray);
-      localStorage.setItem("panierKey", panierArrayStr);
-      
-  }
-}
+
 // Fin Panier
