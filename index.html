@@ -17,11 +17,20 @@
 <body class="container-fluid">
     <header>
         <div class="into-header">
-        <div><a src="index.html" class="oricam"><h1>Ori'Cam</h1></a></div>
-        <nav>
-            <i class="fa-solid fa-basket-shopping"></i>
-            <a href="./html/basket.html" class="panier">panier</a>
-        </nav>
+            <div><a src="index.html" class="oricam"><h1>Ori'Cam</h1></a></div>
+            <div class="dropdown">
+                <div id="panier">
+                    <p><span id="in-panier-items-num">0</span> Articles</p>
+                </div>
+                <ul id="panier-dropdown" hidden>
+                    <li id="empty-panier-mag"><a>Votre panier est vide</a></li>
+                    <li class="go-to-panier" hidden><a href="./html/basket.html">Voir le panier</a></li>
+                </ul>
+            </div>
+            <nav>
+                <i class="fa-solid fa-basket-shopping"></i>
+                <a href="./html/basket.html" class="panier">panier</a>
+            </nav>
         </div>
     </header>
     <section class="bg-banniere">

@@ -28,17 +28,20 @@
             <div id="sectionbloc">
                 <section id="sectionArticles">
                     <h2 class="panier-art-titre">Votre panier</h2>
-                    <div id="liste-panier">
-                        <div class="articles-titre">
-                            <div>NOM</div>
-                            <div>COULEUR</div>
-                            <div>PRIX</div>
-                        </div>
+                    <table id="liste-panier">
+                        <thead class="articles-titre">
+                            <tr>
+                                <th>NOM</th>
+                                <th>COULEUR</th>
+                                <th>PRIX</th>
+                            </tr>
+                        </thead>
                         <div class="paniervide">Votre panier est vide <i class="far fa-frown"></i></div>
                         
                         <!-- Espace dynamique -->
                         
-                    </div>
+                    </table>
+                    <p>Sous total : <span class="subtotal"></span>€</p>
                     <div id="panierTotaux">
     
                         <!-- Espace dynamique -->
@@ -70,7 +73,7 @@
                         <input id="email" type="text" name="email" placeholder="Email" class="">
                         <div id="emaiL" class="cache">Email incorrecte format d'email : text@texte.text</div>
     
-                        <button>Commander</button>
+                        <button id="confirm-command">Passer la commande</button>
                         <a href="../index.html" class="retour text-center">Continuez vos achats</a>
                     </form>
                 </section>

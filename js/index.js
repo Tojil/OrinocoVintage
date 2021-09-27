@@ -73,7 +73,7 @@ function getProduit() {
                                 
                                 </select>
                 
-                                <button id=${value._id}>Ajouter au panier</button>
+                                <button type="button" class="add-to-panier" data-price="${(value.price / 100).toFixed(2)}" data-name="${value.name}" data-id="${value._id}">Ajouter au panier</button>
                                 </form>
                                 <a href="../index.html" class="retour flex items-center  ">
                                 Retour
@@ -83,10 +83,11 @@ function getProduit() {
                           </div>`;
         
       //  mainArticle.appendChild()
+      createPanier()
       addLenses()
       ajoutAuPanier()
       tableOfProducts()
-      createPanier()
+      
       // Ajout des lenses dans les cameras
       function addLenses() {
 
@@ -99,6 +100,35 @@ function getProduit() {
       }
 
       // Debut Création de Panier
+
+      // Comportement du panier au survol pour affichage de son contenu
+
+      var timeout;
+
+      $for('#panier').on({
+        mouseenter: function() {
+          $('#panier-dropdown').show();
+        },
+        mouseleave: function() {
+          timeout = setTimeout(function() {
+            $('#panier-dropdown').hide();
+          }, 200);
+        }
+      })
+
+      // Laisse le contenu ouvert à son survol
+      // Le cache quand la souris sort
+
+      $('#panier-dropdown').on({
+        mouseenter: function() {
+          clearTimeout(timeout);
+        },
+        mouseleave: function() {
+          $('#panier-dropdown').hide;
+        }
+      });
+
+      // Creation du panier
 
       function createPanier() {
 
@@ -118,12 +148,12 @@ function getProduit() {
         this.price = price
       }
 
-      let produits = new Camera(selectedCamera.name, selectedCamera.lenses[0], selectedCamera.price);
+      let produits = new Camera(selectedCamera.name, selectedCamera.lense[""], selectedCamera.price);
 
       })
 
       const buttonSendPanier = document.querySelector("button");
-      buttonSendPanier.addEventListener("click", function(event) {
+      buttonSendPanier.addEventListener("onClick", function(event) {
         
       event.preventDefault();
       
