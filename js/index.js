@@ -130,30 +130,30 @@ function getProduit() {
 
       // Creation du panier
 
-      function createPanier() {
+        function createPanier() {
 
-        let panier = []
-        panier.push(selectedCamera)
-        localStorage.setItem("panierKey", selectedCamera)
+          let panier = []
+          panier.push(selectedCamera)
+          localStorage.setItem("panierKey", panier)
 
-        if (localStorage.getItem('panierKey') == null) {
-            let panierArrayStr = JSON.stringify(panier);
-            localStorage.setItem("panierKey", panierArrayStr);
+          if (localStorage.getItem('panierKey') == null) {
+              let panierArrayStr = JSON.stringify(panier);
+              localStorage.setItem("panierKey", panierArrayStr);
+          }
         }
-      }
 
-      function Camera(name,lense,price) {
-        this.name = name,
-        this.lense = lense,
-        this.price = price
-      }
+        function Camera(name,lense,price) {
+          this.name = name,
+          this.lense = lense,
+          this.price = price
+        }
 
       let produits = new Camera(selectedCamera.name, selectedCamera.lense[""], selectedCamera.price);
 
       })
 
       const buttonSendPanier = document.querySelector("button");
-      buttonSendPanier.addEventListener("onClick", function(event) {
+      buttonSendPanier.addEventListener("click", function(event) {
         
       event.preventDefault();
       
@@ -163,20 +163,19 @@ function getProduit() {
         let listOfProducts = ``;
         camerasSelected.forEach(prod => 
           listOfProducts += `
-          <div class="articles-titre">
-          <div>NOM</div>
-          <div>COULEUR</div>
-          <div>PRIX</div>
-          </div>
-          <tr class="text-center">
-            <td class="w-25 align-middle">${prod.name}</td>
-            <td class="w-25 align-middle">${prod.lense}</td>
-            <td class="w-25 align-middle">${prod.price}</td>
+          <thead class="articles-titre">
+            <tr>
+                <th>NOM</th>
+                <th>COULEUR</th>
+                <th>PRIX</th>
+            </tr>
+          </thead>
+          <div class="paniervide">Votre panier est vide <i class="far fa-frown"></i></div>
           `
           )
           document.getElementsById("liste-panier").innerHTML = listOfProducts
-      }
-    })
+        }
+      })
         .catch(function(err) {
         // Une erreur est survenue
     })
