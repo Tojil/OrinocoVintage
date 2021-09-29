@@ -151,8 +151,39 @@ function getProduit() {
             localStorage.setItem("panierKey", strNumGetPanier);
 
             // appel la fonction du nombre d'articles
-            //indicateurNbArticlePanier()
+            indicateurNbArticlePanier()
         }) 
+      }
+
+      // Indicateur du nombre d'articles dans le panier
+      function indicateurNbArticlePanier() {
+
+        let getPanier = localStorage.getItem("panierKey");
+
+        let arrayGetPanier = JSON.parse(getPanier);
+        const nbArticleInPanier = arrayGetPanier.length;
+        
+        if (nbArticleInPanier > 0) {
+
+            const headerReload = document.querySelector("header");
+            headerReload.innerHTML =
+            `
+            <div class="into-header">
+                <div><a href="index.html">Ori'Cam</a></div>
+            
+                <nav>
+                    <a href="basket.html" id="panier">
+                        <div class="nb-articles cache"> ${nbArticleInPanier} </div>
+                        <i class="fas fa-shopping-basket"></i>
+                        <p>Panier</p>
+                    </a>
+                </nav>
+            </div>
+            `;
+
+            let affichageNbArticlesPanier = document.querySelector(".nb-articles");
+            affichageNbArticlesPanier.classList.remove("cache");
+        }
       }
   
         tableOfProducts()
