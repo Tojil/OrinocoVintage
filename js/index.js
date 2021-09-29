@@ -57,6 +57,7 @@ function getProduit() {
       }
     })
     .then(function(value) {
+      
       selectedCamera = value
             document
             .getElementById("main_Article")
@@ -82,115 +83,121 @@ function getProduit() {
                             </div>
                           </div>`;
         
-      createPanier()
-      addLenses()
-      ajoutAuPanier()
+        //tableOfProducts()
 
-      // Création de Panier
-      function createPanier() {
+    //     .catch(function(err) {
+    //     // Une erreur est survenue
+    // })
+    ajoutAuPanier()
+    indicateurNbArticlePanier()
+    addLenses(value)
 
-        if (localStorage.getItem('panierKey') == null) {
-            
-            let panierArray = [];
-            let panierArrayStr = JSON.stringify(panierArray);
-            localStorage.setItem("panierKey", panierArrayStr);
-            
-        }
-      }
-      
-      // Ajout des lenses dans les cameras
-      function addLenses() {
-
-        const lensesIndex = document.querySelector('#lenses');
-        
-        for (let nbLenses = 0; nbLenses < value.lenses.length; nbLenses++) {
-            lensesIndex.innerHTML += 
-            `<option class="optionLenses" value="${value.lenses[nbLenses]}">${value.lenses[nbLenses]}</option>`
-        };
-      }
-
-      // Ajout l'article de la page au panier
-      function ajoutAuPanier() {
-
-        const buttonSendPanier = document.querySelector("button");
-
-        buttonSendPanier.addEventListener("click", function(event) {
-
-            event.preventDefault();
-
-            // creer differentes constantes avec les valeurs de l'articleChoisi
-            const nameArticleChoisi = document.querySelector("h2");
-            const urlArticleChoisi = window.location.search;
-            const lenseChoisi = document.querySelector("#lenses");
-            const prixArticleChoisi = document.querySelector(".card-price");
-            
-            // creer constante avec les proprietes de l'articleChoisi
-            const articleChoisi = {
-                name: nameArticleChoisi.textContent,
-                id: urlArticleChoisi.slice(1),
-                lense: lenseChoisi.options[lenseChoisi.selectedIndex].text,
-                price: prixArticleChoisi.textContent
-            };
-
-            // converti en String JSON articleChoisi 
-            const stringArticleChoisi = JSON.stringify(articleChoisi)
-
-            // creer variable avec panierKey qui se trouve dans localStorage
-            let getPanier = localStorage.getItem("panierKey");
-
-            // creer variable avec getPanier et le converti en valeur JS
-            let numGetPanier = JSON.parse(getPanier);
-
-            // ajoute stringActicleChoisi dans numGetPanier
-            numGetPanier.push(stringArticleChoisi);
-
-            // creer variable avec numGetPanier converti en String JSON
-            let strNumGetPanier = JSON.stringify(numGetPanier);
-
-            // stock en localStorage panierKey avec la valeur strNumGetPanier en string JSON
-            localStorage.setItem("panierKey", strNumGetPanier);
-
-            // appel la fonction du nombre d'articles
-            indicateurNbArticlePanier()
-        }) 
-      }
-
-      // Indicateur du nombre d'articles dans le panier
-      function indicateurNbArticlePanier() {
-
-        let getPanier = localStorage.getItem("panierKey");
-
-        let arrayGetPanier = JSON.parse(getPanier);
-        const nbArticleInPanier = arrayGetPanier.length;
-        
-        if (nbArticleInPanier > 0) {
-
-            const headerReload = document.querySelector("header");
-            headerReload.innerHTML =
-            `
-            <div class="into-header">
-                <div><a href="index.html">Ori'Cam</a></div>
-            
-                <nav>
-                    <a href="basket.html" id="panier">
-                        <div class="nb-articles cache"> ${nbArticleInPanier} </div>
-                        <i class="fas fa-shopping-basket"></i>
-                        <p>Panier</p>
-                    </a>
-                </nav>
-            </div>
-            `;
-
-            let affichageNbArticlesPanier = document.querySelector(".nb-articles");
-            affichageNbArticlesPanier.classList.remove("cache");
-        }
-      }
-  
-        tableOfProducts()
-
-        .catch(function(err) {
-        // Une erreur est survenue
-    })
   })
 }
+
+// Création de Panier
+function createPanier() {
+
+  if (localStorage.getItem('panierKey') == null) {
+      
+      let panierArray = [];
+      let panierArrayStr = JSON.stringify(panierArray);
+      localStorage.setItem("panierKey", panierArrayStr);
+      
+  }
+}
+
+// Ajout des lenses dans les cameras
+function addLenses(value) {
+
+  const lensesIndex = document.querySelector('#lenses');
+  
+  for (let nbLenses = 0; nbLenses < value.lenses.length; nbLenses++) {
+      lensesIndex.innerHTML += 
+      `<option class="optionLenses" value="${value.lenses[nbLenses]}">${value.lenses[nbLenses]}</option>`
+  };
+}
+
+// Ajout l'article de la page au panier
+function ajoutAuPanier() {
+
+  const buttonSendPanier = document.querySelector("button");
+
+  buttonSendPanier.addEventListener("click", function(event) {
+
+      event.preventDefault();
+
+      // creer differentes constantes avec les valeurs de l'articleChoisi
+      const nameArticleChoisi = document.querySelector("h2");
+      const urlArticleChoisi = window.location.search;
+      const lenseChoisi = document.querySelector("#lenses");
+      const prixArticleChoisi = document.querySelector(".card-price");
+
+      
+      // creer constante avec les proprietes de l'articleChoisi
+      const articleChoisi = {
+          name: nameArticleChoisi.textContent,
+          id: urlArticleChoisi.slice(1),
+          lense: lenseChoisi.options[lenseChoisi.selectedIndex].text,
+          price: prixArticleChoisi.textContent,
+          quantity: 1
+      };
+
+      // converti en String JSON articleChoisi 
+      const stringArticleChoisi = JSON.stringify(articleChoisi)
+
+      // creer variable avec panierKey qui se trouve dans localStorage
+      let basket = JSON.parse(localStorage.getItem("panierKey"));
+
+      basket = basket.map(el => JSON.parse(el));
+
+      //const articleIndex = basket.findIndex(el => )
+
+      // ajoute stringActicleChoisi dans numGetPanier
+      numGetPanier.push(stringArticleChoisi);
+
+      // creer variable avec numGetPanier converti en String JSON
+      let strNumGetPanier = JSON.stringify(numGetPanier);
+
+      // stock en localStorage panierKey avec la valeur strNumGetPanier en string JSON
+      localStorage.setItem("panierKey", strNumGetPanier);
+
+      // appel la fonction du nombre d'articles
+      indicateurNbArticlePanier()
+  }) 
+}
+
+// Indicateur du nombre d'articles dans le panier
+function indicateurNbArticlePanier() {
+
+  let getPanier = localStorage.getItem("panierKey");
+
+  let arrayGetPanier = JSON.parse(getPanier);
+  const nbArticleInPanier = arrayGetPanier.length;
+  
+  if (nbArticleInPanier > 0) {
+
+      const headerReload = document.querySelector("header");
+      headerReload.innerHTML =
+      `
+      <div class="into-header">
+          <div><a href="index.html">Ori'Cam</a></div>
+      
+          <nav>
+              <a href="basket.html" id="panier">
+                  <div class="nb-articles cache"> ${nbArticleInPanier} </div>
+                  <i class="fas fa-shopping-basket"></i>
+                  <p>Panier</p>
+              </a>
+          </nav>
+      </div>
+      `;
+
+      let affichageNbArticlesPanier = document.querySelector(".nb-articles");
+      affichageNbArticlesPanier.classList.remove("cache");
+  }
+}
+
+createPanier()
+
 
