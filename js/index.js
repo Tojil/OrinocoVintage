@@ -64,7 +64,7 @@ function getProduit() {
                             <div class='card' style='width: 18rem;'>
                               <img src='${value.imageUrl}' class="card-img-top" alt="Camera Vintage">
                               <div class="card-body">
-                                <h3 class="card-title">${value.name}</h3>
+                                <h2 class="card-title">${value.name}</h2>
                                 <p class="card-text">${value.description}</p>
                                 <p class="card-price">${(value.price / 100).toFixed(2)} EUR</p>
                                 <form>
@@ -82,11 +82,21 @@ function getProduit() {
                             </div>
                           </div>`;
         
-      //  mainArticle.appendChild()
       createPanier()
       addLenses()
       ajoutAuPanier()
-      tableOfProducts()
+
+      // Création de Panier
+      function createPanier() {
+
+        if (localStorage.getItem('panierKey') == null) {
+            
+            let panierArray = [];
+            let panierArrayStr = JSON.stringify(panierArray);
+            localStorage.setItem("panierKey", panierArrayStr);
+            
+        }
+      }
       
       // Ajout des lenses dans les cameras
       function addLenses() {
@@ -99,90 +109,57 @@ function getProduit() {
         };
       }
 
-      // Debut Création de Panier
+      // Ajout l'article de la page au panier
+      function ajoutAuPanier() {
 
-      // Comportement du panier au survol pour affichage de son contenu
+        const buttonSendPanier = document.querySelector("button");
 
-      var timeout;
+        buttonSendPanier.addEventListener("click", function(event) {
 
-      $for('#panier').on({
-        mouseenter: function() {
-          $('#panier-dropdown').show();
-        },
-        mouseleave: function() {
-          timeout = setTimeout(function() {
-            $('#panier-dropdown').hide();
-          }, 200);
-        }
-      })
+            event.preventDefault();
 
-      // Laisse le contenu ouvert à son survol
-      // Le cache quand la souris sort
+            // creer differentes constantes avec les valeurs de l'articleChoisi
+            const nameArticleChoisi = document.querySelector("h2");
+            const urlArticleChoisi = window.location.search;
+            const lenseChoisi = document.querySelector("#lenses");
+            const prixArticleChoisi = document.querySelector(".card-price");
+            
+            // creer constante avec les proprietes de l'articleChoisi
+            const articleChoisi = {
+                name: nameArticleChoisi.textContent,
+                id: urlArticleChoisi.slice(1),
+                lense: lenseChoisi.options[lenseChoisi.selectedIndex].text,
+                price: prixArticleChoisi.textContent
+            };
 
-      $('#panier-dropdown').on({
-        mouseenter: function() {
-          clearTimeout(timeout);
-        },
-        mouseleave: function() {
-          $('#panier-dropdown').hide;
-        }
-      });
+            // converti en String JSON articleChoisi 
+            const stringArticleChoisi = JSON.stringify(articleChoisi)
 
-      // Creation du panier
+            // creer variable avec panierKey qui se trouve dans localStorage
+            let getPanier = localStorage.getItem("panierKey");
 
-        function createPanier() {
+            // creer variable avec getPanier et le converti en valeur JS
+            let numGetPanier = JSON.parse(getPanier);
 
-          let panier = []
-          panier.push(selectedCamera)
-          localStorage.setItem("panierKey", panier)
+            // ajoute stringActicleChoisi dans numGetPanier
+            numGetPanier.push(stringArticleChoisi);
 
-          if (localStorage.getItem('panierKey') == null) {
-              let panierArrayStr = JSON.stringify(panier);
-              localStorage.setItem("panierKey", panierArrayStr);
-          }
-        }
+            // creer variable avec numGetPanier converti en String JSON
+            let strNumGetPanier = JSON.stringify(numGetPanier);
 
-        function Camera(name,lense,price) {
-          this.name = name,
-          this.lense = lense,
-          this.price = price
-        }
+            // stock en localStorage panierKey avec la valeur strNumGetPanier en string JSON
+            localStorage.setItem("panierKey", strNumGetPanier);
 
-      let produits = new Camera(selectedCamera.name, selectedCamera.lense[""], selectedCamera.price);
+            // appel la fonction du nombre d'articles
+            //indicateurNbArticlePanier()
+        }) 
+      }
+  
+        tableOfProducts()
 
-      })
-
-      const buttonSendPanier = document.querySelector("button");
-      buttonSendPanier.addEventListener("click", function(event) {
-        
-      event.preventDefault();
-      
-      panier.push(produits)
-
-      function tableOfProducts() {
-        let listOfProducts = ``;
-        camerasSelected.forEach(prod => 
-          listOfProducts += `
-          <thead class="articles-titre">
-            <tr>
-                <th>NOM</th>
-                <th>COULEUR</th>
-                <th>PRIX</th>
-            </tr>
-          </thead>
-          <div class="paniervide">Votre panier est vide <i class="far fa-frown"></i></div>
-          `
-          )
-          document.getElementsById("liste-panier").innerHTML = listOfProducts
-        }
-      })
         .catch(function(err) {
         // Une erreur est survenue
     })
+  })
 }
 
-// Fin Produit
-
-
-
-// Fin Panier
