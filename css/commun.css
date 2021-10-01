@@ -130,7 +130,11 @@ tr {
     vertical-align: inherit;
     border-color: inherit;
 }
-
+#panier {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
 
 .panier {
     font-family: 'Comfortaa', cursive;
@@ -239,6 +243,7 @@ button {
 .nb-articles {
     font-family: 'Comfortaa', cursive;
     position: absolute;
+    top: -10px;
     display: flex;
     justify-content: center;
     align-items: center;
