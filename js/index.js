@@ -151,10 +151,17 @@ function ajoutAuPanier() {
 
       basket = basket.map(el => JSON.parse(el));
 
-      //const articleIndex = basket.findIndex(el => )
+      const articleIndex = basket.findIndex(el => el.id === articleChoisi.id)
 
-      // ajoute stringActicleChoisi dans numGetPanier
-      numGetPanier.push(stringArticleChoisi);
+      // si l'article chosi d'est pas dans le panier alors ajoute stringActicleChoisi dans numGetPanier
+      if(articleIndex < 0) {
+          numGetPanier.push(stringArticleChoisi);
+      }
+
+      // si l'article choisi existe deja dans le panier alors ajute-le et incrmente la quantité
+      if (articleIndex >= 0) {
+        articleChosi.quantity += 1;
+      }
 
       // creer variable avec numGetPanier converti en String JSON
       let strNumGetPanier = JSON.stringify(numGetPanier);
