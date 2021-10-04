@@ -132,7 +132,7 @@ function ajoutAuPanier() {
       const urlArticleChoisi = window.location.search;
       const lenseChoisi = document.querySelector("#lenses");
       const prixArticleChoisi = document.querySelector(".card-price");
-
+      let quantityArticle = 1
       
       // creer constante avec les proprietes de l'articleChoisi
       const articleChoisi = {
@@ -140,7 +140,7 @@ function ajoutAuPanier() {
           id: urlArticleChoisi.slice(1),
           lense: lenseChoisi.options[lenseChoisi.selectedIndex].text,
           price: prixArticleChoisi.textContent,
-          quantity: 1
+          quantity: quantityArticle
       };
 
       // converti en String JSON articleChoisi 
@@ -149,22 +149,23 @@ function ajoutAuPanier() {
       // creer variable avec panierKey qui se trouve dans localStorage
       let basket = JSON.parse(localStorage.getItem("panierKey"));
 
-      basket = basket.map(el => JSON.parse(el));
+      //basket = basket.map(el => JSON.parse(el));
 
-      const articleIndex = basket.findIndex(el => el.id === articleChoisi.id)
+      const articleIndex = basket.findIndex(el => el.id === articleChoisi.id);
 
-      // si l'article chosi d'est pas dans le panier alors ajoute stringActicleChoisi dans numGetPanier
+      // si l'article chosi n'est pas dans le panier alors ajoute acticleChoisi dans Basket
       if(articleIndex < 0) {
-          numGetPanier.push(stringArticleChoisi);
+          basket.push(articleChoisi);
+      } else {
+        quantityArticle += 1;
+        basket.push(articleChoisi);
       }
 
       // si l'article choisi existe deja dans le panier alors ajute-le et incrmente la quantité
-      if (articleIndex >= 0) {
-        articleChosi.quantity += 1;
-      }
+
 
       // creer variable avec numGetPanier converti en String JSON
-      let strNumGetPanier = JSON.stringify(numGetPanier);
+      let strNumGetPanier = JSON.stringify(basket);
 
       // stock en localStorage panierKey avec la valeur strNumGetPanier en string JSON
       localStorage.setItem("panierKey", strNumGetPanier);
@@ -184,20 +185,10 @@ function indicateurNbArticlePanier() {
   
   if (nbArticleInPanier > 0) {
 
-      const headerReload = document.querySelector("header");
+      const headerReload = document.querySelector(".nb-articles");
       headerReload.innerHTML =
       `
-      <div class="into-header">
-          <div><a href="index.html">Ori'Cam</a></div>
-      
-          <nav>
-              <a href="basket.html" id="panier">
-                  <div class="nb-articles cache"> ${nbArticleInPanier} </div>
-                  <i class="fas fa-shopping-basket"></i>
-                  <p>Panier</p>
-              </a>
-          </nav>
-      </div>
+      <span> ${nbArticleInPanier} </span>
       `;
 
       let affichageNbArticlesPanier = document.querySelector(".nb-articles");
@@ -206,5 +197,6 @@ function indicateurNbArticlePanier() {
 }
 
 createPanier()
+indicateurNbArticlePanier()
 
 

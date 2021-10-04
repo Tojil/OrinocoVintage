@@ -121,6 +121,10 @@ header i {
     font-size: 30px;
 }
 
+nav {
+    display: flex;
+}
+
 /* accueil fin */
 
 /* Panier debut */
@@ -244,6 +248,7 @@ button {
     font-family: 'Comfortaa', cursive;
     position: absolute;
     top: -10px;
+    right: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
