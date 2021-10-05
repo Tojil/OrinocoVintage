@@ -198,5 +198,73 @@ function indicateurNbArticlePanier() {
 
 createPanier()
 indicateurNbArticlePanier()
+var tabBasket = []
+function pagePanier() {
 
+  let getBasket = localStorage.getItem("panierKey");
+  let numGetBasket = JSON.parse(getBasket);
+  
+  if (numGetBasket.length == 0) {
+      const messagePanierVide = document.querySelector(".paniervide ")
+      messagePanierVide.classList.remove("cache");
+  }
+
+  for (let articleChoisi in numGetBasket) {
+  
+      let articlePanier = numGetBasket[articleChoisi];
+      let convertInArray = JSON.parse(articlePanier);
+      
+      const tableauPanier = document.querySelector("#liste-basket");
+
+      let carteFormatPanier = document.createElement("div");
+      carteFormatPanier.classList.add("articles-panier-beta")
+      carteFormatPanier.innerHTML = 
+      `
+      <div class="name"> ${convertInArray.name} </div>
+      <div class="color"> ${convertInArray.color} </div>
+      <div class="price"> ${convertInArray.price} </div>
+      `;
+
+      tableauPanier.appendChild(carteFormatPanier);
+
+  }
+
+  addButtonDelete();
+
+  function addButtonDelete() {
+
+      numOfArticles = numGetPanier.length;
+      let i = 0
+
+      for (i; i < numOfArticles; i++) {
+          let artPanier = document.querySelector(".articles-panier-beta");
+          artPanier.innerHTML += 
+          `<div class="delete" id=${i} onclick="deleteArt(id)"><i class="fas fa-trash-alt"></i></div>`;
+          artPanier.classList.add("articles-panier");
+          artPanier.classList.remove("articles-panier-beta");
+      }
+  }
+
+  const allPrices = document.querySelectorAll(".price"); 
+  const arrayAllPrices = Array.from(allPrices)
+
+  const nbPrices = arrayAllPrices.length
+  let totalPanier = 0;
+  
+  for (let j = 0; j < nbPrices; j++) {
+      let strBasis = arrayAllPrices[j].textContent;
+      let newStrBasis = strBasis.substring(0, strBasis.length - 2);
+      let convertStrInNum = parseInt(newStrBasis);
+
+      totalPanier += convertStrInNum;
+  }
+  
+  const affichageTotal = document.querySelector("#panierTotaux");
+  let blocTotal = document.createElement("div");
+  blocTotal.innerHTML =
+  `<span>TOTAL :</span><span class="totalPanierN">${totalPanier} €</span>`;
+
+  affichageTotal.appendChild(blocTotal);
+  
+}
 
