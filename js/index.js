@@ -83,11 +83,6 @@ function getProduit() {
                             </div>
                           </div>`;
         
-        //tableOfProducts()
-
-    //     .catch(function(err) {
-    //     // Une erreur est survenue
-    // })
     ajoutAuPanier()
     indicateurNbArticlePanier()
     addLenses(value)
@@ -153,15 +148,31 @@ function ajoutAuPanier() {
 
       const articleIndex = basket.findIndex(el => el.id === articleChoisi.id);
 
-      // si l'article chosi n'est pas dans le panier alors ajoute acticleChoisi dans Basket
-      if(articleIndex < 0) {
-          basket.push(articleChoisi);
-      } else {
-        quantityArticle += 1;
-        basket.push(articleChoisi);
-      }
+      var newArticle = true
 
-      // si l'article choisi existe deja dans le panier alors ajute-le et incrmente la quantité
+      basket.forEach(function(el) {
+        // si l'article est déjà présent, on incrémente la quantité
+        if (el.id == articleIndex.id) {
+            newArticle = false;
+            el.quantity += basket.quantity;}
+    });
+
+    // s'il est nouveau, on l'ajoute
+    if (newArticle) {
+      basket.push(articleChoisi);
+    }
+      // var newArticle = true
+
+      // // si l'article chosi n'est pas dans le panier alors ajoute acticleChoisi dans Basket
+      // if(articleChoisi.id == id) {
+      //   newArticle = false
+      //   articleChoisi.id += articleChoisi.quantity
+      // } else {
+      //   newArticle = true
+      //   basket.push(articleChoisi);
+      // }
+
+      // // si l'article choisi existe deja dans le panier alors ajute-le et incrmente la quantité
 
 
       // creer variable avec numGetPanier converti en String JSON
@@ -201,28 +212,31 @@ indicateurNbArticlePanier()
 var tabBasket = []
 function pagePanier() {
 
-  let getBasket = localStorage.getItem("panierKey");
-  let numGetBasket = JSON.parse(getBasket);
+  // creer variable avec panierKey qui se trouve dans localStorage
+  let basket = JSON.parse(localStorage.getItem("panierKey"));
   
-  if (numGetBasket.length == 0) {
+  if (basket.length == 0) {
       const messagePanierVide = document.querySelector(".paniervide ")
       messagePanierVide.classList.remove("cache");
   }
 
-  for (let articleChoisi in numGetBasket) {
+  for (let articleChoisi in basket) {
   
-      let articlePanier = numGetBasket[articleChoisi];
-      let convertInArray = JSON.parse(articlePanier);
+      let articlePanier = basket[articleChoisi];
+      let convertInArray = articlePanier;
       
-      const tableauPanier = document.querySelector("#liste-basket");
+      const tableauPanier = document.querySelector("#liste-panier");
 
       let carteFormatPanier = document.createElement("div");
       carteFormatPanier.classList.add("articles-panier-beta")
       carteFormatPanier.innerHTML = 
       `
-      <div class="name"> ${convertInArray.name} </div>
-      <div class="color"> ${convertInArray.color} </div>
-      <div class="price"> ${convertInArray.price} </div>
+      <div class="listeProducts">
+        <div class="name"> ${articlePanier.name} </div>
+        <div class="color"> ${articlePanier.lense} </div>
+        <div class="price"> ${articlePanier.price} </div>
+        <div class="quantity"> ${articlePanier.quantity} </div>
+      </div>
       `;
 
       tableauPanier.appendChild(carteFormatPanier);
@@ -233,7 +247,7 @@ function pagePanier() {
 
   function addButtonDelete() {
 
-      numOfArticles = numGetPanier.length;
+      numOfArticles = basket.length;
       let i = 0
 
       for (i; i < numOfArticles; i++) {
@@ -269,4 +283,326 @@ function pagePanier() {
 }
 
 pagePanier()
+
+function deleteArt(indexDel) {
+
+  let basketForDel = JSON.parse(localStorage.getItem("panierKey"));
+  basketForDel.splice(indexDel, 1);
+  const newPanier = JSON.stringify(basketForDel);
+  localStorage.setItem("panierKey", newPanier);
+  
+  alert("Votre article à bien été supprimé");
+  setTimeout(300);
+  window.location.reload();
+  
+}
+
+//-------------------------------------------
+// Formulaire panier Validation
+//-------------------------------------------
+let form = document.querySelector("#contact")
+
+verifForm()
+envoieFormulaire()
+
+
+function envoieFormulaire() {
+
+    let button = document.querySelector("button");
+
+    button.addEventListener('click', function(e) {
+
+        //e.preventDefault();
+
+        let basket = localStorage.getItem("panierKey");
+        basket = JSON.parse(basket);
+
+
+        if (validLetter(form.firstName) && validLetter(form.lastName) && validAddress(form.address) && validLetter(form.city) && validEmail(form.email)) {
+            
+            if (basket == 0) {
+                
+                alert ("Vous ne pouvez pas commander un panier qui est vide, veuillez sélectionner un article au minimum");
+
+            } else {
+
+                // Récupération des srtings articles du panier
+                let products = [];
+
+                for (let articleInBasket in basket) {
+    
+                    let articlePanier = basket[articleInBasket];
+                    let convertInArray = JSON.parse(articlePanier);
+                    
+                    let getIdArtPanier = convertInArray.id;
+                    
+                    products.push(getIdArtPanier);
+                    
+                }
+                //---------------------------------------------
+
+
+                // Récupération du formulaire
+                let contact = {
+                    firstName: form.firstName.value,
+                    lastName: form.lastName.value,
+                    address: form.address.value,
+                    city: form.city.value,
+                    email: form.email.value
+                };
+                //---------------------------------------------
+
+
+                // Envoie des données avec FETCH
+                fetch("http://localhost:3000/api/cameras/order",
+                {
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify({contact, products})
+                })
+                .then(response => response.json())
+                .then(function(response) {
+
+                    let objetRetour = response;
+
+                    console.log(objetRetour["orderId"]);
+                    localStorage.setItem("orderKey", objetRetour["orderId"]);
+                    
+                    let totaldupanier = document.querySelector(".totalPanierN");
+                    localStorage.setItem("totalKey", totaldupanier.textContent);
+
+
+                    alert("Veuillez cliquer sur OK pour comfirmer votre commande.");
+                    location.replace("confirmation.html");
+                })
+                .catch(function(error){
+
+                    console.log(error)
+
+                })
+
+            }
+
+        } else {
+
+            if (basket == 0) {
+                alert ("Votre panier est vide, veuillez sélectionner au moins un article et le formulaire n'est pas correctement rempli");
+            } else {
+                alert ("Le formulaire n'est pas correctement rempli");
+            }
+        } 
+    });
+}
+
+
+// --- Vérification Formulaire avant envoie
+function verifForm() {
+
+  form.firstName.addEventListener('change', function() {
+      validLetter(this);
+
+      const msgError = document.querySelector("#firstN");
+
+      if(validLetter(this) == false) {
+          
+          msgError.classList.remove("cache");
+
+      } else {
+
+          msgError.classList.add("cache");
+
+      }
+  });
+
+  form.lastName.addEventListener('change', function() {
+      validLetter(this);
+
+      const msgError = document.querySelector("#lastN");
+      
+      if(validLetter(this) == false) {
+          
+          msgError.classList.remove("cache");
+
+      } else {
+
+          msgError.classList.add("cache");
+
+      }
+
+  });
+
+  form.address.addEventListener('change', function() {
+      validAddress(this);
+
+      const msgError = document.querySelector("#addrS");
+      
+      if(validLetter(this) == false) {
+          
+          msgError.classList.remove("cache");
+
+      } else {
+
+          msgError.classList.add("cache");
+
+      }
+      
+  });
+
+  form.city.addEventListener('change', function() {
+      validLetter(this);
+
+      const msgError = document.querySelector("#citY");
+      
+      if(validLetter(this) == false) {
+          
+          msgError.classList.remove("cache");
+
+      } else {
+
+          msgError.classList.add("cache");
+
+      }
+      
+  });
+
+  form.email.addEventListener('change', function() {
+      validEmail(this);
+
+      const msgError = document.querySelector("#emaiL");
+      
+      if(validLetter(this) == false) {
+          
+          msgError.classList.remove("cache");
+
+      } else {
+
+          msgError.classList.add("cache");
+
+      }
+  });
+}
+
+
+// REGEX pour formulaire
+function validEmail(inputEmail) {
+  let emailRegex = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g');
+
+  let testEmail = emailRegex.test(inputEmail.value);
+
+  if (testEmail) {
+      inputEmail.classList.add("borderGreen");
+      inputEmail.classList.remove("borderRed");
+  } else {
+      inputEmail.classList.add("borderRed");
+      inputEmail.classList.remove("borderGreen");
+  }
+
+  if (inputEmail.value.length == 0) {
+      inputEmail.classList.remove("borderGreen");
+      inputEmail.classList.remove("borderRed");        
+  }
+
+  return testEmail;
+}
+
+function validLetter(inputLetter) {
+  let letterRegex = new RegExp('[a-zA-Z ,.-]$', 'g');
+
+  let testLetter = letterRegex.test(inputLetter.value);
+
+  if (inputLetter.value.length < 2) {
+      inputLetter.classList.add("borderRed");
+      inputLetter.classList.remove("borderGreen");
+      testLetter = false;
+  } else if (testLetter) {
+      inputLetter.classList.add("borderGreen");
+      inputLetter.classList.remove("borderRed");
+  } else {
+      inputLetter.classList.add("borderRed");
+      inputLetter.classList.remove("borderGreen");
+  }
+
+
+  if (inputLetter.value.length == 0) {
+      inputLetter.classList.remove("borderGreen");
+      inputLetter.classList.remove("borderRed");        
+  }
+  
+  return testLetter;
+}
+
+function validAddress(inputAddress) {
+  let addressRegex = new RegExp ('[0-9a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.-]$', 'g');
+
+  let addressTest = addressRegex.test(inputAddress.value);
+
+  if (inputAddress.value.length < 2) {
+      inputAddress.classList.add("borderRed");
+      inputAddress.classList.remove("borderGreen");
+      addressTest = false;
+  } else if (addressTest) {
+      inputAddress.classList.add("borderGreen");
+      inputAddress.classList.remove("borderRed");
+  } else {
+      inputAddress.classList.add("borderRed");
+      inputAddress.classList.remove("borderGreen");
+  }
+
+  if (inputAddress.value.length == 0) {
+      inputAddress.classList.remove("borderGreen");
+      inputAddress.classList.remove("borderRed");
+  }
+
+  return addressTest;
+}
+
+
+
+
+function messageCommande() {
+
+    localStorage.removeItem("panierKey");
+
+    let orderIdOfOrder = localStorage.getItem("orderKey");
+    let priceOfOrder = localStorage.getItem("totalKey");
+
+    let mainCommande = document.querySelector("main");
+    
+    let messageOrderId = document.createElement("div");
+    messageOrderId.classList.add("message");
+    messageOrderId.innerHTML =
+    `
+    <h1>Merci</h1>
+    <h2>d'avoir commandé sur <span class="title">Ori'Cam</span></h2>
+    <h3>Votre numéro de commande est le suivant :</h3>
+    <div class="order_id dyna"> ${orderIdOfOrder} </div>
+    <h4>Pour un montant total de :</h4>
+    <div class="total dyna"> ${priceOfOrder}</div>
+    <h5>A bientôt sur notre site</h5>
+    <i class="fas fa-chevron-down"></i>
+    
+    <button>Revenir à l'accueil</button>`;
+
+    mainCommande.appendChild(messageOrderId);
+    restoreAccueil()
+    messageCommande()
+}
+
+function restoreAccueil() {
+
+    let buttonBack = document.querySelector("button");
+    buttonBack.addEventListener("click", function() {
+
+        localStorage.removeItem("totalKey");
+        localStorage.removeItem("orderKey");
+
+        location.replace("./index.html");
+
+    })
+    
+}
+
 
