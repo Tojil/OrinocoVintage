@@ -264,6 +264,27 @@ button {
     bottom: -10px;
 }
 
+.listeBasket {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    
+
+}
+
+.listeProducts {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0 10px ;
+    margin-top: 10px;
+    border: 2px solid red;
+    color: white;
+    width: auto;
+    height: 30px;
+    min-height: 20px;
+}
+
 /* Panier fin */
 
 /* produit debut */
