@@ -6,88 +6,84 @@ let selectedCamera = undefined;
 
 let contain = document.getElementById("camera-container")
 let mainArticle = document.getElementById("main_Article")
-let urlApi = "http://localhost:3000/api/cameras";
+const urlApi = "http://localhost:3000/api/cameras";
 
 function getAllCameras() {
-    fetch("http://localhost:3000/api/cameras")
+    fetch(urlApi)
     .then(function(res) {
-      console.log(res)
       if (res.ok) {
         return res.json();
       }
     })
     .then(function(value) {
-      console.log(value)
-      let nbOfValue = value.length
-      for(let i = 0; i < nbOfValue; i++) {
+      let camerasCount = value.length
+      for(let i = 0; i < camerasCount; i++) {
         let relPrice = value[i].price
-        document
-        .getElementById("camera-container")
-        .innerHTML += `<div >
-                        <div class='card' style='width: 18rem;'>
-                          <img src='${value[i].imageUrl}' class="card-img-top" alt="Camera Vintage">
-                          <div class="card-body">
-                            <h3 class="card-title">${value[i].name}</h3>
-                            <p class="card-text">${value[i].description}</p>
-                            <p class="card-price">${(relPrice / 100).toFixed(2)} EUR</p>
-                            <a href="./html/product.html?id=${value[i]._id}" class="btn btn-primary" id="${value[i]._id}" class="lien">Choisir</a>
+        document.getElementById("camera-container")
+            .innerHTML += `<div >
+                            <div class='card' style='width: 18rem;'>
+                            <img src='${value[i].imageUrl}' class="card-img-top" alt="Camera Vintage">
+                            <div class="card-body">
+                                <h3 class="card-title">${value[i].name}</h3>
+                                <p class="card-text">${value[i].description}</p>
+                                <p class="card-price">${(relPrice / 100).toFixed(2)} EUR</p>
+                                <a href="./html/product.html?id=${value[i]._id}" class="btn btn-primary" id="${value[i]._id}" class="lien">Choisir</a>
+                                </div>
                             </div>
-                          </div>
-                        </div>`
+                            </div>`
       }
-      contain.appendChild()
+      contain.appendChild();
     })
 
     .catch(function(err) {
-    // Une erreur est survenue
+    console.log("Une erreur est survenue lors de la recuperation des cameras");
     })
 }
 
 // Debut Produit dans product.html 
 
-function getProduit() {
+function getProduct() {
   let queryParams = window.location.search.substr(1).split("&");
   let paramIdIndex = queryParams.findIndex(value => value.split("=")[0] == "id");
   let id = queryParams[paramIdIndex].split("=")[1];
 
     fetch(`${urlApi}/${id}`)
-    .then(function(res) {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then(function(value) {
-      
-      selectedCamera = value
-            document
-            .getElementById("main_Article")
-            .innerHTML = `<div >
-                            <div class='card' style='width: 18rem;'>
-                              <img src='${value.imageUrl}' class="card-img-top" alt="Camera Vintage">
-                              <div class="card-body">
-                                <h2 class="card-title">${value.name}</h2>
-                                <p class="card-text">${value.description}</p>
-                                <p class="card-price">${(value.price / 100).toFixed(2)} EUR</p>
-                                <form>
-                                <label for="lenses">Choisir l'objectif :</label>
-                                <select name="lenses" id="lenses">
-                                
-                                </select>
-                
-                                <button type="button" class="add-to-panier" data-price="${(value.price / 100).toFixed(2)}" data-name="${value.name}" data-id="${value._id}">Ajouter au panier</button>
-                                </form>
-                                <a href="../index.html" class="retour flex items-center  ">
-                                Retour
-                                </a>
-                              </div>
-                            </div>
-                          </div>`;
+        .then(function(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        })
+        .then(function(value) {
         
-    ajoutAuPanier()
-    indicateurNbArticlePanier()
-    addLenses(value)
+            selectedCamera = value
+            document.getElementById("main_Article")
+                .innerHTML = `<div >
+                                <div class='card' style='width: 18rem;'>
+                                <img src='${value.imageUrl}' class="card-img-top" alt="Camera Vintage">
+                                <div class="card-body">
+                                    <h2 class="card-title">${value.name}</h2>
+                                    <p class="card-text">${value.description}</p>
+                                    <p class="card-price">${(value.price / 100).toFixed(2)} EUR</p>
+                                    <form>
+                                    <label for="lenses">Choisir l'objectif :</label>
+                                    <select name="lenses" id="lenses">
+                                    
+                                    </select>
+                    
+                                    <button type="button" class="add-to-panier" data-price="${(value.price / 100).toFixed(2)}" data-name="${value.name}" data-id="${value._id}">Ajouter au panier</button>
+                                    </form>
+                                    <a href="../index.html" class="retour flex items-center  ">
+                                    Retour
+                                    </a>
+                                </div>
+                                </div>
+                            </div>`;
+        
+            ajoutAuPanier()
+            indicateurNbArticlePanier()
+            addLenses(value)
 
-  })
+        });
 }
 
 // Création de Panier
@@ -148,22 +144,12 @@ function ajoutAuPanier() {
 
       const articleIndex = basket.findIndex(el => el.id === articleChoisi.id);
 
-      var newArticle = true
-
-      basket.forEach(function(el) {
-        // si l'article est déjà présent, on incrémente la quantité
-        if (el.id == articleIndex.id) {
-            newArticle = false;
-            el.quantity += basket.quantity;}
-    });
-
-    // s'il est nouveau, on l'ajoute
-    if (newArticle) {
-      basket.push(articleChoisi);
-    }
-
+      if(articleIndex > -1) {
+      basket[articleIndex].quantity += 1;
+      } else {
+        basket.push(articleChoisi)
+      }
       // // si l'article choisi existe deja dans le panier alors ajute-le et incrmente la quantité
-
 
       // creer variable avec numGetPanier converti en String JSON
       let strNumGetPanier = JSON.stringify(basket);
@@ -182,7 +168,8 @@ function indicateurNbArticlePanier() {
   let getPanier = localStorage.getItem("panierKey");
 
   let arrayGetPanier = JSON.parse(getPanier);
-  const nbArticleInPanier = arrayGetPanier.length;
+  let nbArticleInPanier = 0;
+  arrayGetPanier.forEach(el => nbArticleInPanier += el.quantity)
   
   if (nbArticleInPanier > 0) {
 
@@ -194,6 +181,14 @@ function indicateurNbArticlePanier() {
 
       let affichageNbArticlesPanier = document.querySelector(".nb-articles");
       affichageNbArticlesPanier.classList.remove("cache");
+  }
+  let panierVideDiv = document.querySelector("#paniervide");
+  if(panierVideDiv) {
+      if(nbArticleInPanier > 0) {
+      panierVideDiv.classList.add("cache");
+    } else {
+        panierVideDiv.classList.remove("cache");
+    }
   }
 }
 
@@ -214,8 +209,10 @@ function pagePanier() {
   
       let articlePanier = basket[articleChoisi];
       let convertInArray = articlePanier;
+      let subPrice = parseInt(articlePanier.price);
+      let subTotal = subPrice*articlePanier.quantity;
       
-      const tableauPanier = document.querySelector("#liste-panier");
+      let tableauPanier = document.querySelector("#liste-panier");
 
       let carteFormatPanier = document.createElement("div");
       carteFormatPanier.classList.add("articles-panier-beta")
@@ -224,7 +221,7 @@ function pagePanier() {
       <div class="listeProducts">
         <div class="name"> ${articlePanier.name} </div>
         <div class="color"> ${articlePanier.lense} </div>
-        <div class="price"> ${articlePanier.price} </div>
+        <div class="price"> ${subTotal} </div>
         <div class="quantity"> ${articlePanier.quantity} </div>
       </div>
       `;
@@ -257,7 +254,7 @@ function pagePanier() {
   
   for (let j = 0; j < nbPrices; j++) {
       let strBasis = arrayAllPrices[j].textContent;
-      let newStrBasis = strBasis.substring(0, strBasis.length - 2);
+      let newStrBasis = strBasis.substring(0, strBasis.length - 1);
       let convertStrInNum = parseInt(newStrBasis);
 
       totalPanier += convertStrInNum;
@@ -310,7 +307,7 @@ function envoieFormulaire() {
 
         if (validLetter(form.firstName) && validLetter(form.lastName) && validAddress(form.address) && validLetter(form.city) && validEmail(form.email)) {
             
-            if (basket == 0) {
+            if (basket.length == 0) {
                 
                 alert ("Vous ne pouvez pas commander un panier qui est vide, veuillez sélectionner un article au minimum");
 
@@ -322,9 +319,8 @@ function envoieFormulaire() {
                 for (let articleInBasket in basket) {
     
                     let articlePanier = basket[articleInBasket];
-                    let convertInArray = JSON.parse(articlePanier);
                     
-                    let getIdArtPanier = convertInArray.id;
+                    let getIdArtPanier = articlePanier.id;
                     
                     products.push(getIdArtPanier);
                     
@@ -344,7 +340,7 @@ function envoieFormulaire() {
 
 
                 // Envoie des données avec FETCH
-                fetch("http://localhost:3000/api/cameras/order",
+                fetch(urlApi+"/order",
                 {
                     headers: {
                     'Accept': 'application/json',
@@ -378,7 +374,7 @@ function envoieFormulaire() {
 
         } else {
 
-            if (basket == 0) {
+            if (basket.length == 0) {
                 alert ("Votre panier est vide, veuillez sélectionner au moins un article et le formulaire n'est pas correctement rempli");
             } else {
                 alert ("Le formulaire n'est pas correctement rempli");
@@ -578,7 +574,6 @@ function messageCommande() {
 
     mainCommande.appendChild(messageOrderId);
     restoreAccueil()
-    messageCommande()
 }
 
 function restoreAccueil() {
@@ -589,7 +584,7 @@ function restoreAccueil() {
         localStorage.removeItem("totalKey");
         localStorage.removeItem("orderKey");
 
-        location.replace("./index.html");
+        location.replace("../index.html");
 
     })
     
