@@ -278,7 +278,7 @@ button {
     justify-content: space-around;
     padding: 0 10px ;
     margin-top: 10px;
-    border: 2px solid red;
+    border: 2px solid rgb(124, 5, 5);
     color: white;
     width: auto;
     height: 30px;
@@ -292,6 +292,27 @@ button {
 .article {
     flex-direction: column;
     height: 100%;
+}
+
+.articles-panier {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.listeProducts {
+    width: 95%;
+}
+
+.delete {
+    width: 5%;
+    padding: 0 10px ;
+    margin-top: 10px;
+    border: 2px solid rgb(124, 5, 5);
+    color: white;
+    width: auto;
+    height: 30px;
+    min-height: 20px;
 }
 
 #article-img {

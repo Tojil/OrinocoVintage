@@ -161,16 +161,6 @@ function ajoutAuPanier() {
     if (newArticle) {
       basket.push(articleChoisi);
     }
-      // var newArticle = true
-
-      // // si l'article chosi n'est pas dans le panier alors ajoute acticleChoisi dans Basket
-      // if(articleChoisi.id == id) {
-      //   newArticle = false
-      //   articleChoisi.id += articleChoisi.quantity
-      // } else {
-      //   newArticle = true
-      //   basket.push(articleChoisi);
-      // }
 
       // // si l'article choisi existe deja dans le panier alors ajute-le et incrmente la quantité
 
@@ -312,7 +302,7 @@ function envoieFormulaire() {
 
     button.addEventListener('click', function(e) {
 
-        //e.preventDefault();
+        e.preventDefault();
 
         let basket = localStorage.getItem("panierKey");
         basket = JSON.parse(basket);
@@ -376,7 +366,7 @@ function envoieFormulaire() {
 
 
                     alert("Veuillez cliquer sur OK pour comfirmer votre commande.");
-                    location.replace("confirmation.html");
+                    location.replace("../html/confirmation.html");
                 })
                 .catch(function(error){
 
