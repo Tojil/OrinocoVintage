@@ -125,11 +125,6 @@ header {
     font-size: 30px;
 }
 
-#oricam {
-    position: absolute;
-    left: 80px;
-}
-
 nav {
     display: flex;
 }
