@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5 {
     font-family: 'Dancing Script', cursive;
 }
 
-p {
+p, .dyna {
     font-family: 'Comfortaa', cursive;
 }
 
@@ -115,10 +115,19 @@ header i {
     margin-right: 10px;
 }
 
+header {
+    position: relative;
+}
+
 .oricam {
     font-family: 'Dancing Script', cursive;
     color: white;
     font-size: 30px;
+}
+
+#oricam {
+    position: absolute;
+    left: 80px;
 }
 
 nav {
@@ -255,7 +264,8 @@ button {
     font-size: 1em;
     font-weight: 600;
     color: white;
-    background-color: #ff4931;
+    background-color: rgb(124, 5, 5);
+    box-shadow: 0 0 25px rgb(248, 245, 245);
     line-height: 20px;
     width: 25px;
     height: 25px;
@@ -336,6 +346,38 @@ a.retour {
     line-height: 50px;
     border: 1px solid #acaaaa;
     margin-bottom: 25px;
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1em;
+}
+
+.dyna {
+    flex-wrap: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: 600;
+    border-radius: 10px;
+    background-color: black;
+    border: 2px solid rgb(124, 5, 5);
+    box-shadow: 0 0 25px rgb(248, 245, 245);
+    width: auto;
+    height: auto;
+    min-height: 2em;
+    line-height: 2.2em;
+    padding: 0 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 /* produit fin */
