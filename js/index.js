@@ -340,7 +340,7 @@ function envoieFormulaire() {
 
 
                 // Envoie des données avec FETCH
-                fetch(urlApi+'/order',
+                fetch(urlApi+'/order/',
                 {
                     headers: {
                     'Accept': 'application/json',
