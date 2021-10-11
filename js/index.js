@@ -195,6 +195,9 @@ function indicateurNbArticlePanier() {
 createPanier()
 indicateurNbArticlePanier()
 var tabBasket = []
+
+pagePanier()
+
 function pagePanier() {
 
   // creer variable avec panierKey qui se trouve dans localStorage
@@ -269,8 +272,6 @@ function pagePanier() {
   
 }
 
-pagePanier()
-
 function deleteArt(indexDel) {
 
   let basketForDel = JSON.parse(localStorage.getItem("panierKey"));
@@ -288,10 +289,6 @@ function deleteArt(indexDel) {
 // Formulaire panier Validation
 //-------------------------------------------
 let form = document.querySelector("#contact")
-
-verifForm()
-envoieFormulaire()
-
 
 function envoieFormulaire() {
 
@@ -471,6 +468,8 @@ function verifForm() {
   });
 }
 
+verifForm()
+envoieFormulaire()
 
 // REGEX pour formulaire
 function validEmail(inputEmail) {
@@ -546,8 +545,6 @@ function validAddress(inputAddress) {
 }
 
 
-
-
 function messageCommande() {
 
     localStorage.removeItem("panierKey");
@@ -589,5 +586,6 @@ function restoreAccueil() {
     })
     
 }
+
 
 
