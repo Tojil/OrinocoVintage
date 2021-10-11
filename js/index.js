@@ -204,7 +204,7 @@ function pagePanier() {
   let basket = JSON.parse(localStorage.getItem("panierKey"));
   
   if (basket.length == 0) {
-      const messagePanierVide = document.querySelector(".paniervide ")
+      const messagePanierVide = document.querySelector(".paniervide");  
       messagePanierVide.classList.remove("cache");
   }
 
@@ -218,7 +218,7 @@ function pagePanier() {
       let tableauPanier = document.querySelector("#liste-panier");
 
       let carteFormatPanier = document.createElement("div");
-      carteFormatPanier.classList.add("articles-panier-beta")
+      carteFormatPanier.classList.add("articles-panier-beta");
       carteFormatPanier.innerHTML = 
       `
       <div class="listeProducts">
@@ -227,9 +227,9 @@ function pagePanier() {
         <div class="price"> ${subTotal} </div>
         <div class="quantity"> ${articlePanier.quantity} </div>
       </div>
-      `;
+      `
 
-      tableauPanier.appendChild(carteFormatPanier);
+      tableauPanier.appendChild(carteFormatPanier)
 
   }
 
@@ -337,13 +337,13 @@ function envoieFormulaire() {
 
 
                 // Envoie des données avec FETCH
-                fetch(urlApi+'/order/',
+                fetch('http://localhost:3000/api/cameras/order',
                 {
+                    method: 'POST',
                     headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                     },
-                    method: "POST",
                     body: JSON.stringify({contact, products})
                 })
                 .then(response => response.json())
@@ -586,6 +586,5 @@ function restoreAccueil() {
     })
     
 }
-
 
 
