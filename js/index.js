@@ -79,7 +79,7 @@ function getProduct() {
                                 </div>
                             </div>`;
         
-            ajoutAuPanier()
+            addToBasket()
             indicateurNbArticlePanier()
             addLenses(value)
 
@@ -87,7 +87,7 @@ function getProduct() {
 }
 
 // Création de Panier
-function createPanier() {
+function createBasket() {
 
   if (localStorage.getItem('panierKey') == null) {
       
@@ -110,11 +110,11 @@ function addLenses(value) {
 }
 
 // Ajout l'article de la page au panier
-function ajoutAuPanier() {
+function addToBasket() {
 
-  const buttonSendPanier = document.querySelector("button");
+  const buttonSendToBasket = document.querySelector("button");
 
-  buttonSendPanier.addEventListener("click", function(event) {
+  buttonSendToBasket.addEventListener("click", function(event) {
 
       event.preventDefault();
 
@@ -192,11 +192,8 @@ function indicateurNbArticlePanier() {
   }
 }
 
-createPanier()
+createBasket()
 indicateurNbArticlePanier()
-var tabBasket = []
-
-pagePanier()
 
 function pagePanier() {
 
@@ -230,7 +227,9 @@ function pagePanier() {
       `
 
       tableauPanier.appendChild(carteFormatPanier)
-
+      verifForm()
+      envoieFormulaire()
+      
   }
 
   addButtonDelete();
@@ -269,6 +268,8 @@ function pagePanier() {
   `<span>TOTAL :</span><span class="totalPanierN">${totalPanier} €</span>`;
 
   affichageTotal.appendChild(blocTotal);
+
+
   
 }
 
@@ -366,7 +367,6 @@ function envoieFormulaire() {
                     console.log(error)
 
                 })
-
             }
 
         } else {
@@ -468,8 +468,6 @@ function verifForm() {
   });
 }
 
-verifForm()
-envoieFormulaire()
 
 // REGEX pour formulaire
 function validEmail(inputEmail) {
@@ -546,7 +544,7 @@ function validAddress(inputAddress) {
 
 
 function messageCommande() {
-
+    
     localStorage.removeItem("panierKey");
 
     let orderIdOfOrder = localStorage.getItem("orderKey");
@@ -571,6 +569,7 @@ function messageCommande() {
 
     mainCommande.appendChild(messageOrderId);
     restoreAccueil()
+    
 }
 
 function restoreAccueil() {
