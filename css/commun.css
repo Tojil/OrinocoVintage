@@ -3,10 +3,9 @@ html, body {
 }
 
 .bg-banniere {
-    position: relative;
+    height: 200px;
     object-fit: cover;
     margin: auto;
-    width: 968px;
     background-color: black;
     display: flex;
     justify-content: center;
@@ -28,9 +27,12 @@ html, body {
 }
 
 #oricam__h2 {
-    font-size: 6rem;
-    top: 13rem;
-    left: 2rem;
+    top: 20rem;
+    left: 12rem;
+}
+
+section img {
+    width: 100%;
 }
 
 body {
@@ -128,6 +130,7 @@ header {
 nav {
     display: flex;
 }
+
 
 /* accueil fin */
 

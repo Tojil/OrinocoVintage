@@ -120,7 +120,7 @@ function addToBasket() {
 
       // creer differentes constantes avec les valeurs de l'articleChoisi
       const nameArticleChoisi = document.querySelector("h2");
-      const urlArticleChoisi = window.location.search;
+      const articleId = window.location.search.slice(1).split('&').map(el => el.split('=')).find(el => el[0] == 'id')[1];
       const lenseChoisi = document.querySelector("#lenses");
       const prixArticleChoisi = document.querySelector(".card-price");
       let quantityArticle = 1
@@ -128,7 +128,7 @@ function addToBasket() {
       // creer constante avec les proprietes de l'articleChoisi
       const articleChoisi = {
           name: nameArticleChoisi.textContent,
-          id: urlArticleChoisi.slice(1),
+          id: articleId,
           lense: lenseChoisi.options[lenseChoisi.selectedIndex].text,
           price: prixArticleChoisi.textContent,
           quantity: quantityArticle
@@ -145,7 +145,7 @@ function addToBasket() {
       const articleIndex = basket.findIndex(el => el.id === articleChoisi.id);
 
       if(articleIndex > -1) {
-      basket[articleIndex].quantity += 1;
+        basket[articleIndex].quantity += 1;
       } else {
         basket.push(articleChoisi)
       }
@@ -158,8 +158,8 @@ function addToBasket() {
       localStorage.setItem("panierKey", strNumGetPanier);
 
       // appel la fonction du nombre d'articles
-      indicateurNbArticlePanier()
-  }) 
+      indicateurNbArticlePanier();
+  });
 }
 
 // Indicateur du nombre d'articles dans le panier
@@ -169,7 +169,7 @@ function indicateurNbArticlePanier() {
 
   let arrayGetPanier = JSON.parse(getPanier);
   let nbArticleInPanier = 0;
-  arrayGetPanier.forEach(el => nbArticleInPanier += el.quantity)
+  arrayGetPanier.forEach(el => nbArticleInPanier += el.quantity);
   
   if (nbArticleInPanier > 0) {
 
@@ -192,8 +192,6 @@ function indicateurNbArticlePanier() {
   }
 }
 
-createBasket()
-indicateurNbArticlePanier()
 
 function pagePanier() {
 
@@ -314,15 +312,7 @@ function envoieFormulaire() {
                 // Récupération des srtings articles du panier
                 let products = [];
 
-                for (let articleInBasket in basket) {
-    
-                    let articlePanier = basket[articleInBasket];
-                    
-                    let getIdArtPanier = articlePanier.id;
-                    
-                    products.push(getIdArtPanier);
-                    
-                }
+                basket.forEach(articlePanier => products.push(articlePanier.id));
                 //---------------------------------------------
 
 
@@ -335,7 +325,20 @@ function envoieFormulaire() {
                     email: form.email.value
                 };
                 //---------------------------------------------
+                // const axios = require('axios').default;
 
+                // // Send a POST request
+
+            //     axios.post('http://localhost:3000/api/cameras/order', {
+                //         firstName: 'Fred',
+                //         lastName: 'Flintstone'
+                //       })
+                //       .then(function (response) {
+                //         console.log(response);
+                //       })
+                //       .catch(function (error) {
+                //         console.log(error);
+                //       });
 
                 // Envoie des données avec FETCH
                 fetch('http://localhost:3000/api/cameras/order',
@@ -348,7 +351,7 @@ function envoieFormulaire() {
                     body: JSON.stringify({contact, products})
                 })
                 .then(response => response.json())
-                .then(function(response) {
+                .then(response => {
 
                     let objetRetour = response;
 
@@ -586,4 +589,10 @@ function restoreAccueil() {
     
 }
 
+function initialize() {
+    createBasket();
+    indicateurNbArticlePanier();
+}
+
+initialize();
 
