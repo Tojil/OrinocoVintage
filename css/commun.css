@@ -3,13 +3,18 @@ html, body {
 }
 
 .bg-banniere {
-    height: 200px;
+    height: 24rem;
+    padding: 0 1rem;
+    position: relative;
     object-fit: cover;
-    margin: auto;
     background-color: black;
     display: flex;
     justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
+
+
 
 /* accueil debut */
 
@@ -22,13 +27,16 @@ html, body {
 }
 
 #oricam__h1 {
-    font-size: 2.5rem;
-    left: 1rem;
+    font-size: 2rem;
+    left: 10%;
+    top: 5.5rem;
 }
 
 #oricam__h2 {
     top: 20rem;
-    left: 12rem;
+    right: 8rem;
+    /* right: 2rem;
+    bottom: 6rem; */
 }
 
 section img {

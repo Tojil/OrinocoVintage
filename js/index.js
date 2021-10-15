@@ -80,7 +80,7 @@ function getProduct() {
                             </div>`;
         
             addToBasket()
-            indicateurNbArticlePanier()
+            indicatorNbOfItemInBasket()
             addLenses(value)
 
         });
@@ -118,36 +118,36 @@ function addToBasket() {
 
       event.preventDefault();
 
-      // creer differentes constantes avec les valeurs de l'articleChoisi
-      const nameArticleChoisi = document.querySelector("h2");
+      // creer differentes constantes avec les valeurs de l'itemSelected
+      const nameItemSelected = document.querySelector("h2");
       const articleId = window.location.search.slice(1).split('&').map(el => el.split('=')).find(el => el[0] == 'id')[1];
       const lenseChoisi = document.querySelector("#lenses");
-      const prixArticleChoisi = document.querySelector(".card-price");
+      const priceItemSelected = document.querySelector(".card-price");
       let quantityArticle = 1
       
-      // creer constante avec les proprietes de l'articleChoisi
-      const articleChoisi = {
-          name: nameArticleChoisi.textContent,
+      // creer constante avec les proprietes de l'itemSelected
+      const itemSelected = {
+          name: nameItemSelected.textContent,
           id: articleId,
           lense: lenseChoisi.options[lenseChoisi.selectedIndex].text,
-          price: prixArticleChoisi.textContent,
+          price: priceItemSelected.textContent,
           quantity: quantityArticle
       };
 
-      // converti en String JSON articleChoisi 
-      const stringArticleChoisi = JSON.stringify(articleChoisi)
+      // converti en String JSON itemSelected 
+      const stringItemSelected = JSON.stringify(itemSelected)
 
       // creer variable avec panierKey qui se trouve dans localStorage
       let basket = JSON.parse(localStorage.getItem("panierKey"));
 
       //basket = basket.map(el => JSON.parse(el));
 
-      const articleIndex = basket.findIndex(el => el.id === articleChoisi.id);
+      const articleIndex = basket.findIndex(el => el.id === itemSelected.id);
 
       if(articleIndex > -1) {
         basket[articleIndex].quantity += 1;
       } else {
-        basket.push(articleChoisi)
+        basket.push(itemSelected)
       }
       // // si l'article choisi existe deja dans le panier alors ajute-le et incrmente la quantité
 
@@ -158,75 +158,74 @@ function addToBasket() {
       localStorage.setItem("panierKey", strNumGetPanier);
 
       // appel la fonction du nombre d'articles
-      indicateurNbArticlePanier();
+      indicatorNbOfItemInBasket();
   });
 }
 
 // Indicateur du nombre d'articles dans le panier
-function indicateurNbArticlePanier() {
+function indicatorNbOfItemInBasket() {
 
-  let getPanier = localStorage.getItem("panierKey");
+  let getBasket = localStorage.getItem("panierKey");
 
-  let arrayGetPanier = JSON.parse(getPanier);
-  let nbArticleInPanier = 0;
-  arrayGetPanier.forEach(el => nbArticleInPanier += el.quantity);
+  let arrayGetBasket = JSON.parse(getBasket);
+  let nbItemInBasket = 0;
+  arrayGetBasket.forEach(el => nbItemInBasket += el.quantity);
   
-  if (nbArticleInPanier > 0) {
+  if (nbItemInBasket > 0) {
 
       const headerReload = document.querySelector(".nb-articles");
       headerReload.innerHTML =
       `
-      <span> ${nbArticleInPanier} </span>
+      <span> ${nbItemInBasket} </span>
       `;
 
-      let affichageNbArticlesPanier = document.querySelector(".nb-articles");
-      affichageNbArticlesPanier.classList.remove("cache");
+      let displayNbItemBasket = document.querySelector(".nb-articles");
+      displayNbItemBasket.classList.remove("cache");
   }
-  let panierVideDiv = document.querySelector("#paniervide");
-  if(panierVideDiv) {
-      if(nbArticleInPanier > 0) {
-      panierVideDiv.classList.add("cache");
+  let basketEmptyDiv = document.querySelector("#paniervide");
+  if(basketEmptyDiv) {
+      if(nbItemInBasket > 0) {
+      basketEmptyDiv.classList.add("cache");
     } else {
-        panierVideDiv.classList.remove("cache");
+        basketEmptyDiv.classList.remove("cache");
     }
   }
 }
 
 
-function pagePanier() {
+function pageBasket() {
 
   // creer variable avec panierKey qui se trouve dans localStorage
   let basket = JSON.parse(localStorage.getItem("panierKey"));
   
   if (basket.length == 0) {
-      const messagePanierVide = document.querySelector(".paniervide");  
-      messagePanierVide.classList.remove("cache");
+      const messageEmptyBasket = document.querySelector(".paniervide");  
+      messageEmptyBasket.classList.remove("cache");
   }
 
-  for (let articleChoisi in basket) {
+  for (let itemSelected in basket) {
   
-      let articlePanier = basket[articleChoisi];
-      let convertInArray = articlePanier;
-      let subPrice = parseInt(articlePanier.price);
-      let subTotal = subPrice*articlePanier.quantity;
+      let itemBasket = basket[itemSelected];
+      let subPrice = parseInt(itemBasket.price);
+      let subTotal = subPrice*itemBasket.quantity;
       
-      let tableauPanier = document.querySelector("#liste-panier");
+      let arrayBasket = document.querySelector("#liste-panier");
 
-      let carteFormatPanier = document.createElement("div");
-      carteFormatPanier.classList.add("articles-panier-beta");
-      carteFormatPanier.innerHTML = 
+      let cardSizeBasket = document.createElement("div");
+      cardSizeBasket.classList.add("articles-panier-beta");
+      cardSizeBasket.innerHTML = 
       `
       <div class="listeProducts">
-        <div class="name"> ${articlePanier.name} </div>
-        <div class="color"> ${articlePanier.lense} </div>
+        <div class="name"> ${itemBasket.name} </div>
+        <div class="color"> ${itemBasket.lense} </div>
         <div class="price"> ${subTotal} </div>
-        <div class="quantity"> ${articlePanier.quantity} </div>
+        <div class="quantity"> ${itemBasket.quantity} </div>
       </div>
       `
 
-      tableauPanier.appendChild(carteFormatPanier)
+      arrayBasket.appendChild(cardSizeBasket)
       verifForm()
-      envoieFormulaire()
+      sendForm()
       
   }
 
@@ -240,7 +239,7 @@ function pagePanier() {
       for (i; i < numOfArticles; i++) {
           let artPanier = document.querySelector(".articles-panier-beta");
           artPanier.innerHTML += 
-          `<div class="delete" id=${i} onclick="deleteArt(id)"><i class="fas fa-trash-alt"></i></div>`;
+          `<div class="delete" id=${i} onclick="deleteItem(id)"><i class="fas fa-trash-alt"></i></div>`;
           artPanier.classList.add("articles-panier");
           artPanier.classList.remove("articles-panier-beta");
       }
@@ -271,7 +270,7 @@ function pagePanier() {
   
 }
 
-function deleteArt(indexDel) {
+function deleteItem(indexDel) {
 
   let basketForDel = JSON.parse(localStorage.getItem("panierKey"));
   basketForDel.splice(indexDel, 1);
@@ -289,7 +288,7 @@ function deleteArt(indexDel) {
 //-------------------------------------------
 let form = document.querySelector("#contact")
 
-function envoieFormulaire() {
+function sendForm() {
 
     let button = document.querySelector("button");
 
@@ -312,7 +311,7 @@ function envoieFormulaire() {
                 // Récupération des srtings articles du panier
                 let products = [];
 
-                basket.forEach(articlePanier => products.push(articlePanier.id));
+                basket.forEach(itemBasket => products.push(itemBasket.id));
                 //---------------------------------------------
 
 
@@ -546,7 +545,7 @@ function validAddress(inputAddress) {
 }
 
 
-function messageCommande() {
+function messageOrder() {
     
     localStorage.removeItem("panierKey");
 
@@ -571,11 +570,11 @@ function messageCommande() {
     <button>Revenir à l'accueil</button>`;
 
     mainCommande.appendChild(messageOrderId);
-    restoreAccueil()
+    restoreHome()
     
 }
 
-function restoreAccueil() {
+function restoreHome() {
 
     let buttonBack = document.querySelector("button");
     buttonBack.addEventListener("click", function() {
@@ -591,7 +590,7 @@ function restoreAccueil() {
 
 function initialize() {
     createBasket();
-    indicateurNbArticlePanier();
+    indicatorNbOfItemInBasket();
 }
 
 initialize();
