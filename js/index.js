@@ -1,11 +1,9 @@
-//getAllCameras()
 
-let selectedCamera = undefined;
 
 // Dans index.html appel reseaux et affichage des cameras
 
 let contain = document.getElementById("camera-container")
-let mainArticle = document.getElementById("main_Article")
+let mainArticle = document.getElementById("main_Item")
 const urlApi = "http://localhost:3000/api/cameras";
 
 function getAllCameras() {
@@ -56,7 +54,7 @@ function getProduct() {
         .then(function(value) {
         
             selectedCamera = value
-            document.getElementById("main_Article")
+            document.getElementById("main_Item")
                 .innerHTML = `<div >
                                 <div class='card' style='width: 18rem;'>
                                 <img src='${value.imageUrl}' class="card-img-top" alt="Camera Vintage">
@@ -89,11 +87,11 @@ function getProduct() {
 // Création de Panier
 function createBasket() {
 
-  if (localStorage.getItem('panierKey') == null) {
+  if (localStorage.getItem('basketKey') == null) {
       
       let panierArray = [];
       let panierArrayStr = JSON.stringify(panierArray);
-      localStorage.setItem("panierKey", panierArrayStr);
+      localStorage.setItem("basketKey", panierArrayStr);
       
   }
 }
@@ -120,6 +118,7 @@ function addToBasket() {
 
       // creer differentes constantes avec les valeurs de l'itemSelected
       const nameItemSelected = document.querySelector("h2");
+      // recuperation du parametre Id parmi les parametres Get possibles
       const articleId = window.location.search.slice(1).split('&').map(el => el.split('=')).find(el => el[0] == 'id')[1];
       const lenseChoisi = document.querySelector("#lenses");
       const priceItemSelected = document.querySelector(".card-price");
@@ -135,10 +134,10 @@ function addToBasket() {
       };
 
       // converti en String JSON itemSelected 
-      const stringItemSelected = JSON.stringify(itemSelected)
+      // const stringItemSelected = JSON.stringify(itemSelected)
 
-      // creer variable avec panierKey qui se trouve dans localStorage
-      let basket = JSON.parse(localStorage.getItem("panierKey"));
+      // creer variable avec basketKey qui se trouve dans localStorage
+      let basket = JSON.parse(localStorage.getItem("basketKey"));
 
       //basket = basket.map(el => JSON.parse(el));
 
@@ -154,8 +153,8 @@ function addToBasket() {
       // creer variable avec numGetPanier converti en String JSON
       let strNumGetPanier = JSON.stringify(basket);
 
-      // stock en localStorage panierKey avec la valeur strNumGetPanier en string JSON
-      localStorage.setItem("panierKey", strNumGetPanier);
+      // stock en localStorage basketKey avec la valeur strNumGetPanier en string JSON
+      localStorage.setItem("basketKey", strNumGetPanier);
 
       // appel la fonction du nombre d'articles
       indicatorNbOfItemInBasket();
@@ -165,7 +164,7 @@ function addToBasket() {
 // Indicateur du nombre d'articles dans le panier
 function indicatorNbOfItemInBasket() {
 
-  let getBasket = localStorage.getItem("panierKey");
+  let getBasket = localStorage.getItem("basketKey");
 
   let arrayGetBasket = JSON.parse(getBasket);
   let nbItemInBasket = 0;
@@ -195,8 +194,8 @@ function indicatorNbOfItemInBasket() {
 
 function pageBasket() {
 
-  // creer variable avec panierKey qui se trouve dans localStorage
-  let basket = JSON.parse(localStorage.getItem("panierKey"));
+  // creer variable avec basketKey qui se trouve dans localStorage
+  let basket = JSON.parse(localStorage.getItem("basketKey"));
   
   if (basket.length == 0) {
       const messageEmptyBasket = document.querySelector(".paniervide");  
@@ -272,10 +271,10 @@ function pageBasket() {
 
 function deleteItem(indexDel) {
 
-  let basketForDel = JSON.parse(localStorage.getItem("panierKey"));
+  let basketForDel = JSON.parse(localStorage.getItem("basketKey"));
   basketForDel.splice(indexDel, 1);
   const newPanier = JSON.stringify(basketForDel);
-  localStorage.setItem("panierKey", newPanier);
+  localStorage.setItem("basketKey", newPanier);
   
   alert("Votre article à bien été supprimé");
   setTimeout(300);
@@ -296,7 +295,7 @@ function sendForm() {
 
         e.preventDefault();
 
-        let basket = localStorage.getItem("panierKey");
+        let basket = localStorage.getItem("basketKey");
         basket = JSON.parse(basket);
 
 
@@ -323,23 +322,7 @@ function sendForm() {
                     city: form.city.value,
                     email: form.email.value
                 };
-                //---------------------------------------------
-                // const axios = require('axios').default;
-
-                // // Send a POST request
-
-            //     axios.post('http://localhost:3000/api/cameras/order', {
-                //         firstName: 'Fred',
-                //         lastName: 'Flintstone'
-                //       })
-                //       .then(function (response) {
-                //         console.log(response);
-                //       })
-                //       .catch(function (error) {
-                //         console.log(error);
-                //       });
-
-                // Envoie des données avec FETCH
+   
                 fetch('http://localhost:3000/api/cameras/order',
                 {
                     method: 'POST',
@@ -547,7 +530,7 @@ function validAddress(inputAddress) {
 
 function messageOrder() {
     
-    localStorage.removeItem("panierKey");
+    localStorage.removeItem("basketKey");
 
     let orderIdOfOrder = localStorage.getItem("orderKey");
     let priceOfOrder = localStorage.getItem("totalKey");
