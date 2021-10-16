@@ -1,138 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" href="../css/commun.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@417&family=Dancing+Script&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../fontawesome-pro-6.0.0-beta1-web/css/fontawesome.min.css">
-    <title>Panier</title>
-</head>
-<body class="container">
-    <header>
-        <div class="into-header">
-            <div><a href="../index.html" class="oricam"><h1>Ori'Cam</h1></a></div>
-        
-            <nav  class="dropdown">
-                <div class="nb-articles">
-                    <span> 0 </span>
-                </div>
-                <i class="fas fa-shopping-basket"></i>
-                <a href="basket.html" class="panier" id="panier">panier</a>
-            </nav>
-        </div>
-    </header>
-        <main>
-            <div id="sectionbloc">
-                <section id="sectionArticles">
-                    <h2 class="panier-art-titre">Votre panier</h2>
-                    <table id="liste-panier">
-                        <thead>
-                            <tr class="articles-titre">
-                                <th>NOM</th>
-                                <th>OBJECTIF</th>
-                                <th>PRIX</th>
-                                <th>QUANTITÉ</th>
-                            </tr>
-                        </thead>
-                        <div id="paniervide">Votre panier est vide <i class="far fa-frown"></i></div>
-                        
-                        <!-- Espace dynamique -->
-                        
-                    </table>
-                    <div id="panierTotaux">
-    
-                        <!-- Espace dynamique -->
-
-                </section>
-    
-                <section id="sectionFormulaire">
-                    <h2 class="">Vos informations</h2>
-    
-                    <form id="contact">
-                        <label for="firstName">Prénom :</label>
-                        <input id="firstName" type="text" name="firstName" placeholder="Prénom" class="">
-                        <div id="firstN" class="cache">2 caractères minimum sans chiffres</div>
-    
-                        <label for="lastName">Nom :</label>
-                        <input id="lastName" type="text" name="lastName" placeholder="Nom" class="">
-                        <div id="lastN" class="cache">2 caractères minimum sans chiffres</div>
-    
-                        <label for="address">Adresse :</label>
-                        <input id="address" type="text" name="address" placeholder="Adresse" class="">
-                        <div id="addrS" class="cache"> 2 caractères minimum</div>
-    
-                        <label for="city">Ville :</label>
-                        <input id="city" type="text" name="city" placeholder="Ville" class="">
-                        <div id="citY" class="cache">2 caractères minimum sans chiffre</div>
-    
-                        <label for="email">Mail :</label>
-                        <input id="email" type="text" name="email" placeholder="Email" class="">
-                        <div id="emaiL" class="cache">Email incorrecte format d'email : text@texte.text</div>
-    
-                        <div  href="confirmation.html">
-                        <button id="confirm-command">Passer la commande</button>
-                        </div>
-                        <a href="../index.html" class="retour text-center">Continuez vos achats</a>
-                    </form>
-                </section>
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+      <link rel="stylesheet" type="text/css" href="../css/style.css">
+      <link rel="stylesheet" type="text/css" href="../css/commun.css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@417&family=Dancing+Script&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="../fontawesome-pro-6.0.0-beta1-web/css/fontawesome.min.css">
+      <title>Panier</title>
+   </head>
+   <body class="container">
+      <header>
+         <div class="into-header">
+            <div>
+               <a href="../index.html" class="oricam">
+                  <h1>Ori'Cam</h1>
+               </a>
             </div>
-        </main>
-    <footer class="container-fluid">
-        <div class="footer_div_centrale">
+            <nav  class="dropdown">
+               <div class="nb-articles">
+                  <span> 0 </span>
+               </div>
+               <i class="fas fa-shopping-basket"></i>
+               <a href="basket.html" class="panier" id="panier">panier</a>
+            </nav>
+         </div>
+      </header>
+      <main>
+         <div id="sectionbloc">
+            <section id="sectionArticles">
+               <h2 class="panier-art-titre">Votre panier</h2>
+               <div id="paniervide">Votre panier est vide <i class="far fa-frown"></i></div>
+               <table id="liste-panier">
+                  <thead>
+                     <tr class="articles-titre">
+                        <th>NOM</th>
+                        <th>OBJECTIF</th>
+                        <th>PRIX</th>
+                        <th>QUANTITÉ</th>
+                     </tr>
+                  </thead>
+                  <!-- Espace dynamique -->
+               </table>
+               <div id="panierTotaux">
+                  <!-- Espace dynamique -->
+               </div>
+            </section>
+            <section id="sectionFormulaire">
+               <h2 class="">Vos informations</h2>
+               <form id="contact">
+                  <label for="firstName">Prénom :</label>
+                  <input id="firstName" type="text" name="firstName" placeholder="Prénom" class="">
+                  <div id="firstN" class="cache">2 caractères minimum sans chiffres</div>
+                  <label for="lastName">Nom :</label>
+                  <input id="lastName" type="text" name="lastName" placeholder="Nom" class="">
+                  <div id="lastN" class="cache">2 caractères minimum sans chiffres</div>
+                  <label for="address">Adresse :</label>
+                  <input id="address" type="text" name="address" placeholder="Adresse" class="">
+                  <div id="addrS" class="cache"> 2 caractères minimum</div>
+                  <label for="city">Ville :</label>
+                  <input id="city" type="text" name="city" placeholder="Ville" class="">
+                  <div id="citY" class="cache">2 caractères minimum sans chiffre</div>
+                  <label for="email">Mail :</label>
+                  <input id="email" type="text" name="email" placeholder="Email" class="">
+                  <div id="emaiL" class="cache">Email incorrecte format d'email : text@texte.text</div>
+                  <div>
+                     <button id="confirm-command">Passer la commande</button>
+                  </div>
+                  <a href="../index.html" class="retour text-center">Continuez vos achats</a>
+               </form>
+            </section>
+         </div>
+      </main>
+      <footer class="container-fluid">
+         <div class="footer_div_centrale">
             <section class="footer__section">
-                <h5>A PROPOS</h5>
-                <a href="">Conditions générales de ventes</a>
-                <a href="">Conditions générales d'utilisation</a>
-                <a href="">Données personnelles</a>
-                <a href="">Mentions</a>
+               <h5>A PROPOS</h5>
+               <a href="">Conditions générales de ventes</a>
+               <a href="">Conditions générales d'utilisation</a>
+               <a href="">Données personnelles</a>
+               <a href="">Mentions</a>
             </section>
             <section class="footer__section">
-                <h5>SERVICES</h5>
-                <a href="">SAV</a>
-                <a href="">Besoin d'aide ?</a>
-                <a href="">Contactez-nous</a>
+               <h5>SERVICES</h5>
+               <a href="">SAV</a>
+               <a href="">Besoin d'aide ?</a>
+               <a href="">Contactez-nous</a>
             </section>
             <section class="footer__section">
-                <h5>LE GROUPE ORINOCO</h5>
-                <a href="">A propos d'Ori'Cam  </a>
-                <a href="">Recrutement</a>
-                <a href="">Groupe Orinoco</a>
+               <h5>LE GROUPE ORINOCO</h5>
+               <a href="">A propos d'Ori'Cam  </a>
+               <a href="">Recrutement</a>
+               <a href="">Groupe Orinoco</a>
             </section>
             <section class="footer__section">
-                <h5>NOS AUTRES SITES</h5>
-                <a href=""><i class="fas fa-tshirt"></i>Oritextil</a>
-                <a href=""><i class="fas fa-book"></i>Oribook</a>
-                <a href=""><i class="fas fa-camera"></i>Orinours</a>
-                <a href=""><i class="fas fa-chair"></i>Orikea</a>
+               <h5>NOS AUTRES SITES</h5>
+               <a href=""><i class="fas fa-tshirt"></i>Oritextil</a>
+               <a href=""><i class="fas fa-book"></i>Oribook</a>
+               <a href=""><i class="fas fa-camera"></i>Orinours</a>
+               <a href=""><i class="fas fa-chair"></i>Orikea</a>
             </section>
             <section class="footer__section">
-                <h5>PAIEMENTS</h5>
-                <div id="footer_paiement">
-                    <i class="fab fa-cc-paypal"></i>
-                    <i class="fab fa-cc-visa"></i>
-                    <i class="fab fa-cc-mastercard"></i>
-                </div>
+               <h5>PAIEMENTS</h5>
+               <div id="footer_paiement">
+                  <i class="fab fa-cc-paypal"></i>
+                  <i class="fab fa-cc-visa"></i>
+                  <i class="fab fa-cc-mastercard"></i>
+               </div>
             </section>
-        </div>
-
-        <div id="copyright" class="footer_div_centrale">
+         </div>
+         <div id="copyright" class="footer_div_centrale">
             <p><i class="far fa-copyright"></i>2021 - Tous droits réservés - Orinoco & filiales </p>
-        </div>
-    </footer>
-    <script src="https://kit.fontawesome.com/a0287b3502.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../js/index.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-    <script src="./dist/polyfill.bundle.js"></script>
-    <script src="./dist/app.bundle.js"></script>
-    <script type="text/javascript">
-        window.onload = () => pageBasket()
-        </script>
-</body>
+         </div>
+      </footer>
+      <script src="https://kit.fontawesome.com/a0287b3502.js" crossorigin="anonymous"></script>
+      <script src="../js/index.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+      <script src="./dist/polyfill.bundle.js"></script>
+      <script src="./dist/app.bundle.js"></script>
+      <script>
+         window.onload = () => pageBasket()
+      </script>
+   </body>
 </html>
