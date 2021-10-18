@@ -1,4 +1,6 @@
-
+/********************************************************
+*** GESTION DE LA PAGE D'ACCUEIL
+*********************************************************/
 
 // Dans index.html appel reseaux et affichage des cameras
 
@@ -38,7 +40,12 @@ function getAllCameras() {
     })
 }
 
-// Debut Produit dans product.html 
+/********************************************************/
+
+
+/********************************************************
+*** GESTION DE LA PAGE PRODUIT
+*********************************************************/
 
 function getProduct() {
   let queryParams = window.location.search.substr(1).split("&");
@@ -84,7 +91,17 @@ function getProduct() {
         });
 }
 
-// Création de Panier
+// Ajout des lenses dans les cameras
+function addLenses(value) {
+
+    const lensesIndex = document.querySelector('#lenses');
+    
+    for (let nbLenses = 0; nbLenses < value.lenses.length; nbLenses++) {
+        lensesIndex.innerHTML += 
+        `<option class="optionLenses" value="${value.lenses[nbLenses]}">${value.lenses[nbLenses]}</option>`
+    };
+  }
+
 function createBasket() {
 
   if (localStorage.getItem('basketKey') == null) {
@@ -94,17 +111,6 @@ function createBasket() {
       localStorage.setItem("basketKey", panierArrayStr);
       
   }
-}
-
-// Ajout des lenses dans les cameras
-function addLenses(value) {
-
-  const lensesIndex = document.querySelector('#lenses');
-  
-  for (let nbLenses = 0; nbLenses < value.lenses.length; nbLenses++) {
-      lensesIndex.innerHTML += 
-      `<option class="optionLenses" value="${value.lenses[nbLenses]}">${value.lenses[nbLenses]}</option>`
-  };
 }
 
 // Ajout l'article de la page au panier
@@ -191,6 +197,12 @@ function indicatorNbOfItemInBasket() {
   }
 }
 
+/********************************************************/
+
+
+/********************************************************
+*** GESTION DE LA PAGE BASKET
+*********************************************************/
 
 function pageBasket() {
 
@@ -216,7 +228,7 @@ function pageBasket() {
       `
       <div class="listeProducts">
         <div class="name"> ${itemBasket.name} </div>
-        <div class="color"> ${itemBasket.lense} </div>
+        <div class="lense"> ${itemBasket.lense} </div>
         <div class="price"> ${subTotal} </div>
         <div class="quantity"> ${itemBasket.quantity} </div>
       </div>
@@ -282,9 +294,8 @@ function deleteItem(indexDel) {
   
 }
 
-//-------------------------------------------
-// Formulaire panier Validation
-//-------------------------------------------
+// Envoie du formulaire panier après validation
+
 let form = document.querySelector("#contact")
 
 function sendForm() {
@@ -365,12 +376,83 @@ function sendForm() {
     });
 }
 
+// REGEX pour formulaire
+function validEmail(inputEmail) {
+    let emailRegex = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g');
+  
+    let testEmail = emailRegex.test(inputEmail.value);
+  
+    if (testEmail) {
+        inputEmail.classList.add("borderGreen");
+        inputEmail.classList.remove("borderRed");
+    } else {
+        inputEmail.classList.add("borderRed");
+        inputEmail.classList.remove("borderGreen");
+    }
+  
+    if (inputEmail.value.length == 0) {
+        inputEmail.classList.remove("borderGreen");
+        inputEmail.classList.remove("borderRed");        
+    }
+  
+    return testEmail;
+  }
+  
+  function validLetter(inputLetter) {
+    let letterRegex = new RegExp('[a-zA-Z ,.-]$', 'g');
+  
+    let testLetter = letterRegex.test(inputLetter.value);
+  
+    if (inputLetter.value.length < 2) {
+        inputLetter.classList.add("borderRed");
+        inputLetter.classList.remove("borderGreen");
+        testLetter = false;
+    } else if (testLetter) {
+        inputLetter.classList.add("borderGreen");
+        inputLetter.classList.remove("borderRed");
+    } else {
+        inputLetter.classList.add("borderRed");
+        inputLetter.classList.remove("borderGreen");
+    }
+  
+  
+    if (inputLetter.value.length == 0) {
+        inputLetter.classList.remove("borderGreen");
+        inputLetter.classList.remove("borderRed");        
+    }
+    
+    return testLetter;
+  }
+  
+  function validAddress(inputAddress) {
+    let addressRegex = new RegExp ('[0-9a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.-]$', 'g');
+  
+    let addressTest = addressRegex.test(inputAddress.value);
+  
+    if (inputAddress.value.length < 2) {
+        inputAddress.classList.add("borderRed");
+        inputAddress.classList.remove("borderGreen");
+        addressTest = false;
+    } else if (addressTest) {
+        inputAddress.classList.add("borderGreen");
+        inputAddress.classList.remove("borderRed");
+    } else {
+        inputAddress.classList.add("borderRed");
+        inputAddress.classList.remove("borderGreen");
+    }
+  
+    if (inputAddress.value.length == 0) {
+        inputAddress.classList.remove("borderGreen");
+        inputAddress.classList.remove("borderRed");
+    }
+  
+    return addressTest;
+  }
 
 // --- Vérification Formulaire avant envoie
 function verifForm() {
 
   form.firstName.addEventListener('change', function() {
-      validLetter(this);
 
       const msgError = document.querySelector("#firstN");
 
@@ -386,7 +468,6 @@ function verifForm() {
   });
 
   form.lastName.addEventListener('change', function() {
-      validLetter(this);
 
       const msgError = document.querySelector("#lastN");
       
@@ -403,11 +484,10 @@ function verifForm() {
   });
 
   form.address.addEventListener('change', function() {
-      validAddress(this);
 
       const msgError = document.querySelector("#addrS");
       
-      if(validLetter(this) == false) {
+      if(validAddress(this) == false) {
           
           msgError.classList.remove("cache");
 
@@ -437,11 +517,10 @@ function verifForm() {
   });
 
   form.email.addEventListener('change', function() {
-      validEmail(this);
 
       const msgError = document.querySelector("#emaiL");
       
-      if(validLetter(this) == false) {
+      if(validEmail(this) == false) {
           
           msgError.classList.remove("cache");
 
@@ -453,79 +532,12 @@ function verifForm() {
   });
 }
 
-
-// REGEX pour formulaire
-function validEmail(inputEmail) {
-  let emailRegex = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g');
-
-  let testEmail = emailRegex.test(inputEmail.value);
-
-  if (testEmail) {
-      inputEmail.classList.add("borderGreen");
-      inputEmail.classList.remove("borderRed");
-  } else {
-      inputEmail.classList.add("borderRed");
-      inputEmail.classList.remove("borderGreen");
-  }
-
-  if (inputEmail.value.length == 0) {
-      inputEmail.classList.remove("borderGreen");
-      inputEmail.classList.remove("borderRed");        
-  }
-
-  return testEmail;
-}
-
-function validLetter(inputLetter) {
-  let letterRegex = new RegExp('[a-zA-Z ,.-]$', 'g');
-
-  let testLetter = letterRegex.test(inputLetter.value);
-
-  if (inputLetter.value.length < 2) {
-      inputLetter.classList.add("borderRed");
-      inputLetter.classList.remove("borderGreen");
-      testLetter = false;
-  } else if (testLetter) {
-      inputLetter.classList.add("borderGreen");
-      inputLetter.classList.remove("borderRed");
-  } else {
-      inputLetter.classList.add("borderRed");
-      inputLetter.classList.remove("borderGreen");
-  }
+/********************************************************/
 
 
-  if (inputLetter.value.length == 0) {
-      inputLetter.classList.remove("borderGreen");
-      inputLetter.classList.remove("borderRed");        
-  }
-  
-  return testLetter;
-}
-
-function validAddress(inputAddress) {
-  let addressRegex = new RegExp ('[0-9a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.-]$', 'g');
-
-  let addressTest = addressRegex.test(inputAddress.value);
-
-  if (inputAddress.value.length < 2) {
-      inputAddress.classList.add("borderRed");
-      inputAddress.classList.remove("borderGreen");
-      addressTest = false;
-  } else if (addressTest) {
-      inputAddress.classList.add("borderGreen");
-      inputAddress.classList.remove("borderRed");
-  } else {
-      inputAddress.classList.add("borderRed");
-      inputAddress.classList.remove("borderGreen");
-  }
-
-  if (inputAddress.value.length == 0) {
-      inputAddress.classList.remove("borderGreen");
-      inputAddress.classList.remove("borderRed");
-  }
-
-  return addressTest;
-}
+/********************************************************
+*** GESTION DE LA PAGE DE CORFIRMATION
+*********************************************************/
 
 
 function messageOrder() {
@@ -570,6 +582,13 @@ function restoreHome() {
     })
     
 }
+
+/********************************************************/
+
+
+/********************************************************
+*** GESTION 
+*********************************************************/
 
 function initialize() {
     createBasket();
