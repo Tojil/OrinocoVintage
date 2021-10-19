@@ -290,10 +290,13 @@ button {
 }
 
 .listeProducts {
-    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     border: 2px solid rgb(124, 5, 5);
     color: white;
     height: auto;
+    width: 100%;
     min-height: 20px;
 }
 
@@ -322,6 +325,11 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 10px;
+    border: 2px solid rgb(124, 5, 5);
+    color: white;
+    height: auto;
+    min-height: 20px;
 }
 
 

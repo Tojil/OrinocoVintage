@@ -141,9 +141,6 @@ function addToBasket() {
           quantity: quantityArticle
       };
 
-      // converti en String JSON itemSelected 
-      // const stringItemSelected = JSON.stringify(itemSelected)
-
       // creer variable avec basketKey qui se trouve dans localStorage
       let basket = JSON.parse(localStorage.getItem("basketKey"));
 
@@ -221,6 +218,7 @@ function pageBasket() {
       let itemBasket = basket[itemSelected];
       let subPrice = parseInt(itemBasket.price);
       let subTotal = subPrice*itemBasket.quantity;
+      subTotal = subTotal.toLocaleString()
       
       let arrayBasket = document.querySelector("#liste-panier");
 
@@ -250,7 +248,7 @@ function pageBasket() {
       let i = 0
 
       for (i; i < numOfArticles; i++) {
-          let artPanier = document.querySelector(".listeProducts");
+          let artPanier = document.querySelector(".articles-panier-beta");
           artPanier.innerHTML += 
           `<div class="delete" id=${i} onclick="deleteItem(id)"><i class="fas fa-trash-alt"></i></div>`;
           artPanier.classList.add("articles-panier");
@@ -259,17 +257,18 @@ function pageBasket() {
   }
 
   const allPrices = document.querySelectorAll(".price"); 
-  const arrayAllPrices = Array.from(allPrices)
+  const arrayAllPrices = Array.from(allPrices);
 
   const nbPrices = arrayAllPrices.length
   let totalPanier = 0;
   
   for (let p = 0; p < nbPrices; p++) {
       let strBasis = arrayAllPrices[p].textContent;
-      //let newStrBasis = strBasis.substring(0, strBasis.length - 1);
-      let convertStrInNum = parseInt(strBasis);
+      let newStrBasis = strBasis.substring(0, strBasis.length - 1);
+      let convertStrInNum = parseInt(newStrBasis);
 
       totalPanier += convertStrInNum;
+      totalPanier = totalPanier.toLocaleString()
   }
   
   const affichageTotal = document.querySelector("#panierTotaux");
