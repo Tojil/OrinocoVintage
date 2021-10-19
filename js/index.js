@@ -47,6 +47,8 @@ function getAllCameras() {
 *** GESTION DE LA PAGE PRODUIT
 *********************************************************/
 
+// Dans product.html appel reseaux et affichage d'une seule camera
+
 function getProduct() {
   let queryParams = window.location.search.substr(1).split("&");
   let paramIdIndex = queryParams.findIndex(value => value.split("=")[0] == "id");
@@ -91,7 +93,7 @@ function getProduct() {
         });
 }
 
-// Ajout des lenses dans les cameras
+// Ajout des options d'objectif lenses dans les cameras
 function addLenses(value) {
 
     const lensesIndex = document.querySelector('#lenses');
@@ -227,10 +229,10 @@ function pageBasket() {
       cardSizeBasket.innerHTML = 
       `
       <div class="listeProducts">
-        <div class="name"> ${itemBasket.name} </div>
-        <div class="lense"> ${itemBasket.lense} </div>
-        <div class="price"> ${subTotal} </div>
-        <div class="quantity"> ${itemBasket.quantity} </div>
+        <div class="boxSizeForm" class="name"> ${itemBasket.name} </div>
+        <div class="boxSizeForm" class="lense"> ${itemBasket.lense} </div>
+        <div class="boxSizeForm" class="price"> ${subTotal} </div>
+        <div class="boxSizeForm" class="quantity"> ${itemBasket.quantity} </div>
       </div>
       `
 
@@ -248,7 +250,7 @@ function pageBasket() {
       let i = 0
 
       for (i; i < numOfArticles; i++) {
-          let artPanier = document.querySelector(".articles-panier-beta");
+          let artPanier = document.querySelector(".listeProducts", ".articles-panier-beta");
           artPanier.innerHTML += 
           `<div class="delete" id=${i} onclick="deleteItem(id)"><i class="fas fa-trash-alt"></i></div>`;
           artPanier.classList.add("articles-panier");
@@ -260,9 +262,9 @@ function pageBasket() {
   const arrayAllPrices = Array.from(allPrices)
 
   const nbPrices = arrayAllPrices.length
-  let totalPanier = 0;
+  let j = 0;
   
-  for (let j = 0; j < nbPrices; j++) {
+  for (j; j < nbPrices; j++) {
       let strBasis = arrayAllPrices[j].textContent;
       let newStrBasis = strBasis.substring(0, strBasis.length - 1);
       let convertStrInNum = parseInt(newStrBasis);
@@ -273,7 +275,7 @@ function pageBasket() {
   const affichageTotal = document.querySelector("#panierTotaux");
   let blocTotal = document.createElement("div");
   blocTotal.innerHTML =
-  `<span>TOTAL :</span><span class="totalPanierN">${totalPanier} €</span>`;
+  `<span>TOTAL :</span><span class="totalPanierN"> ${j} €</span>`;
 
   affichageTotal.appendChild(blocTotal);
 

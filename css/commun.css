@@ -177,7 +177,7 @@ main {
 .articles-titre {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     border: 2px solid rgb(124, 5, 5);
 }
@@ -283,19 +283,16 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    
+}
 
+.boxSizeForm {
+    width: 80%;
 }
 
 .listeProducts {
-    display: flex;
-    flex-direction: row;
-    padding: 0 10px ;
     margin-top: 10px;
     border: 2px solid rgb(124, 5, 5);
     color: white;
-    width: 95%;
-    width: auto;
     height: auto;
     min-height: 20px;
 }
@@ -328,12 +325,10 @@ button {
 }
 
 
-
-.delete {
+.delete, #trash {
     width: 5%;
-    padding: 0 10px ;
-    margin-top: 10px;
-    border: 2px solid rgb(124, 5, 5);
+    padding: 0px 10px ;
+    border-left: 2px solid rgb(124, 5, 5);
     color: white;
     width: auto;
     height: 30px;
