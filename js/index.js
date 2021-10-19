@@ -7,6 +7,7 @@
 let contain = document.getElementById("camera-container")
 let mainArticle = document.getElementById("main_Item")
 const urlApi = "http://localhost:3000/api/cameras";
+let currentProduct = undefined;
 
 function getAllCameras() {
     fetch(urlApi)
@@ -47,50 +48,84 @@ function getAllCameras() {
 *** GESTION DE LA PAGE PRODUIT
 *********************************************************/
 
-// Dans product.html appel reseaux et affichage d'une seule camera
+// Ajout l'article de la page au panier
+function addToBasket(event) {
+  event.preventDefault();
+  
+  // creer constante avec les proprietes de l'itemSelected
+  const itemSelected = {
+      name: currentProduct.name,
+      id: currentProduct._id,
+      lense: currentProduct.lenses,
+      price: currentProduct.price,
+      quantity: 1
+  };
 
+  // creer variable avec basketKey qui se trouve dans localStorage
+  let basket = JSON.parse(localStorage.getItem("basketKey"));
+
+  const articleIndex = basket.findIndex(el => el.id === itemSelected.id);
+
+  // si l'article choisi existe deja dans le panier alors ajute-le et incrmente la quantité
+  if(articleIndex > -1) {
+    basket[articleIndex].quantity += 1;
+  } else {
+    basket.push(itemSelected)
+  }
+
+  // creer variable avec numGetPanier converti en String JSON
+  let strNumGetPanier = JSON.stringify(basket);
+
+  // stock en localStorage basketKey avec la valeur strNumGetPanier en string JSON
+  localStorage.setItem("basketKey", strNumGetPanier);
+
+  // appel la fonction du nombre d'articles
+  indicatorNbOfItemInBasket();
+}
+
+// Dans product.html appel reseaux et affichage d'une seule camera
 function getProduct() {
   let queryParams = window.location.search.substr(1).split("&");
   let paramIdIndex = queryParams.findIndex(value => value.split("=")[0] == "id");
   let id = queryParams[paramIdIndex].split("=")[1];
 
     fetch(`${urlApi}/${id}`)
-        .then(function(res) {
-        if (res.ok) {
-            return res.json();
-        }
-        })
-        .then(function(value) {
-        
-            selectedCamera = value
-            document.getElementById("main_Item")
-                .innerHTML = `<div >
-                                <div class='card' style='width: 18rem;'>
-                                <img src='${value.imageUrl}' class="card-img-top" alt="Camera Vintage">
-                                <div class="card-body">
-                                    <h2 class="card-title">${value.name}</h2>
-                                    <p class="card-text">${value.description}</p>
-                                    <p class="card-price">${(value.price / 100).toFixed(2)} EUR</p>
-                                    <form>
-                                    <label for="lenses">Choisir l'objectif :</label>
-                                    <select name="lenses" id="lenses">
-                                    
-                                    </select>
-                    
-                                    <button type="button" class="add-to-panier" data-price="${(value.price / 100).toFixed(2)}" data-name="${value.name}" data-id="${value._id}">Ajouter au panier</button>
-                                    </form>
-                                    <a href="../index.html" class="retour flex items-center  ">
-                                    Retour
-                                    </a>
-                                </div>
-                                </div>
-                            </div>`;
-        
-            addToBasket()
-            indicatorNbOfItemInBasket()
-            addLenses(value)
+    .then(function(res) {
+    if (res.ok) {
+        return res.json();
+    }
+    })
+    .then(function(value) {
+    
+        currentProduct = value
+        document.getElementById("main_Item")
+            .innerHTML = `<div >
+                            <div class='card' style='width: 18rem;'>
+                            <img src='${value.imageUrl}' class="card-img-top" alt="Camera Vintage">
+                            <div class="card-body">
+                                <h2 class="card-title">${value.name}</h2>
+                                <p class="card-text">${value.description}</p>
+                                <p class="card-price">${formatPrice(value.price)} EUR</p>
+                                <form>
+                                <label for="lenses">Choisir l'objectif :</label>
+                                <select name="lenses" id="lenses">
+                                
+                                </select>
+                
+                                <button type="button" class="add-to-panier" data-price="${(value.price / 100).toFixed(2)}" data-name="${value.name}" data-id="${value._id}">Ajouter au panier</button>
+                                </form>
+                                <a href="../index.html" class="retour flex items-center  ">
+                                Retour
+                                </a>
+                            </div>
+                            </div>
+                        </div>`;
+    
+        document.querySelector("button.add-to-panier").addEventListener("click", addToBasket);
+        indicatorNbOfItemInBasket();
+        addLenses(value);
 
-        });
+    });
 }
 
 // Ajout des options d'objectif lenses dans les cameras
@@ -102,7 +137,7 @@ function addLenses(value) {
         lensesIndex.innerHTML += 
         `<option class="optionLenses" value="${value.lenses[nbLenses]}">${value.lenses[nbLenses]}</option>`
     };
-  }
+}
 
 function createBasket() {
 
@@ -113,57 +148,6 @@ function createBasket() {
       localStorage.setItem("basketKey", panierArrayStr);
       
   }
-}
-
-// Ajout l'article de la page au panier
-function addToBasket() {
-
-  const buttonSendToBasket = document.querySelector("button");
-
-  buttonSendToBasket.addEventListener("click", function(event) {
-
-      event.preventDefault();
-
-      // creer differentes constantes avec les valeurs de l'itemSelected
-      const nameItemSelected = document.querySelector("h2");
-      // recuperation du parametre Id parmi les parametres Get possibles
-      const articleId = window.location.search.slice(1).split('&').map(el => el.split('=')).find(el => el[0] == 'id')[1];
-      const lenseChoisi = document.querySelector("#lenses");
-      const priceItemSelected = document.querySelector(".card-price");
-      let quantityArticle = 1
-      
-      // creer constante avec les proprietes de l'itemSelected
-      const itemSelected = {
-          name: nameItemSelected.textContent,
-          id: articleId,
-          lense: lenseChoisi.options[lenseChoisi.selectedIndex].text,
-          price: priceItemSelected.textContent,
-          quantity: quantityArticle
-      };
-
-      // creer variable avec basketKey qui se trouve dans localStorage
-      let basket = JSON.parse(localStorage.getItem("basketKey"));
-
-      //basket = basket.map(el => JSON.parse(el));
-
-      const articleIndex = basket.findIndex(el => el.id === itemSelected.id);
-
-      if(articleIndex > -1) {
-        basket[articleIndex].quantity += 1;
-      } else {
-        basket.push(itemSelected)
-      }
-      // // si l'article choisi existe deja dans le panier alors ajute-le et incrmente la quantité
-
-      // creer variable avec numGetPanier converti en String JSON
-      let strNumGetPanier = JSON.stringify(basket);
-
-      // stock en localStorage basketKey avec la valeur strNumGetPanier en string JSON
-      localStorage.setItem("basketKey", strNumGetPanier);
-
-      // appel la fonction du nombre d'articles
-      indicatorNbOfItemInBasket();
-  });
 }
 
 // Indicateur du nombre d'articles dans le panier
@@ -177,14 +161,14 @@ function indicatorNbOfItemInBasket() {
   
   if (nbItemInBasket > 0) {
 
-      const headerReload = document.querySelector(".nb-articles");
-      headerReload.innerHTML =
-      `
-      <span> ${nbItemInBasket} </span>
-      `;
-
       let displayNbItemBasket = document.querySelector(".nb-articles");
-      displayNbItemBasket.classList.remove("cache");
+      if(displayNbItemBasket) {
+          displayNbItemBasket.innerHTML =
+          `
+          <span> ${nbItemInBasket} </span>
+          `;
+          displayNbItemBasket.classList.remove("cache");
+      }      
   }
   let basketEmptyDiv = document.querySelector("#paniervide");
   if(basketEmptyDiv) {
@@ -203,6 +187,78 @@ function indicatorNbOfItemInBasket() {
 *** GESTION DE LA PAGE BASKET
 *********************************************************/
 
+function sendForm(e) {
+    e.preventDefault();
+
+    let basket = localStorage.getItem("basketKey");
+    basket = JSON.parse(basket);
+
+
+    if (validLetter(form.firstName) && validLetter(form.lastName) && validAddress(form.address) && validLetter(form.city) && validEmail(form.email)) {
+        
+        if (basket.length == 0) {
+            
+            alert ("Vous ne pouvez pas commander un panier qui est vide, veuillez sélectionner un article au minimum");
+
+        } else {
+
+            // Récupération des srtings articles du panier
+            let products = [];
+
+            basket.forEach(itemBasket => products.push(itemBasket.id));
+            //---------------------------------------------
+
+
+            // Récupération du formulaire
+            let contact = {
+                firstName: form.firstName.value,
+                lastName: form.lastName.value,
+                address: form.address.value,
+                city: form.city.value,
+                email: form.email.value
+            };
+
+            fetch('http://localhost:3000/api/cameras/order',
+            {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({contact, products})
+            })
+            .then(response => response.json())
+            .then(response => {
+
+                let objetRetour = response;
+
+                console.log(objetRetour["orderId"]);
+                localStorage.setItem("orderKey", objetRetour["orderId"]);
+                
+                let totaldupanier = document.querySelector(".totalPanierN");
+                localStorage.setItem("totalKey", totaldupanier.textContent);
+
+
+                alert("Veuillez cliquer sur OK pour comfirmer votre commande.");
+                location.replace("../html/confirmation.html");
+            })
+            .catch(function(error){
+
+                console.log(error)
+
+            })
+        }
+
+    } else {
+
+        if (basket.length == 0) {
+            alert ("Votre panier est vide, veuillez sélectionner au moins un article et le formulaire n'est pas correctement rempli");
+        } else {
+            alert ("Le formulaire n'est pas correctement rempli");
+        }
+    }
+}
+
 function pageBasket() {
 
   // creer variable avec basketKey qui se trouve dans localStorage
@@ -215,30 +271,27 @@ function pageBasket() {
 
   for (let itemSelected in basket) {
   
-      let itemBasket = basket[itemSelected];
-      let subPrice = parseInt(itemBasket.price);
-      let subTotal = subPrice*itemBasket.quantity;
-      subTotal = subTotal.toLocaleString()
+    let itemBasket = basket[itemSelected];
       
-      let arrayBasket = document.querySelector("#liste-panier");
+    let arrayBasket = document.querySelector("#liste-panier");
 
-      let cardSizeBasket = document.createElement("div");
-      cardSizeBasket.classList.add("articles-panier-beta");
-      cardSizeBasket.innerHTML = 
-      `
-      <div class="listeProducts">
-        <div class="boxSizeForm" class="name"> ${itemBasket.name} </div>
-        <div class="boxSizeForm" class="lense"> ${itemBasket.lense} </div>
-        <div class="boxSizeForm" class="price"> ${subTotal} </div>
-        <div class="boxSizeForm" class="quantity"> ${itemBasket.quantity} </div>
-      </div>
-      `
+    let cardSizeBasket = document.createElement("div");
+    cardSizeBasket.classList.add("articles-panier-beta");
+    cardSizeBasket.innerHTML = 
+    `
+    <div class="listeProducts">
+    <div class="boxSizeForm name"> ${itemBasket.name} </div>
+    <div class="boxSizeForm lense"> ${itemBasket.lense} </div>
+    <div class="boxSizeForm price"> ${formatPrice(itemBasket.price)} € </div>
+    <div class="boxSizeForm quantity"> ${itemBasket.quantity} </div>
+    </div>
+    `
 
-      arrayBasket.appendChild(cardSizeBasket)
-      verifForm()
-      sendForm()
-      
+    arrayBasket.appendChild(cardSizeBasket) 
   }
+  
+  verifForm();
+  document.querySelector("button").addEventListener('click', sendForm);
 
   addButtonDelete();
 
@@ -254,31 +307,21 @@ function pageBasket() {
           artPanier.classList.add("articles-panier");
           artPanier.classList.remove("articles-panier-beta");
       }
-  }
+    }
 
-  const allPrices = document.querySelectorAll(".price"); 
-  const arrayAllPrices = Array.from(allPrices);
-
-  const nbPrices = arrayAllPrices.length
+  const nbPrices = basket.length
   let totalPanier = 0;
   
-  for (let p = 0; p < nbPrices; p++) {
-      let strBasis = arrayAllPrices[p].textContent;
-      let newStrBasis = strBasis.substring(0, strBasis.length - 1);
-      let convertStrInNum = parseInt(newStrBasis);
-
-      totalPanier += convertStrInNum;
-      totalPanier = totalPanier.toLocaleString()
+  for (let i = 0; i < nbPrices; i++) {
+      totalPanier += (basket[i].price * basket[i].quantity);
   }
   
   const affichageTotal = document.querySelector("#panierTotaux");
   let blocTotal = document.createElement("div");
   blocTotal.innerHTML =
-  `<span>TOTAL :</span><span class="totalPanierN"> ${totalPanier} €</span>`;
+  `<span>TOTAL :</span><span class="totalPanierN"> ${formatPrice(totalPanier)} €</span>`;
 
   affichageTotal.appendChild(blocTotal);
-
-
   
 }
 
@@ -299,83 +342,7 @@ function deleteItem(indexDel) {
 
 let form = document.querySelector("#contact")
 
-function sendForm() {
 
-    let button = document.querySelector("button");
-
-    button.addEventListener('click', function(e) {
-
-        e.preventDefault();
-
-        let basket = localStorage.getItem("basketKey");
-        basket = JSON.parse(basket);
-
-
-        if (validLetter(form.firstName) && validLetter(form.lastName) && validAddress(form.address) && validLetter(form.city) && validEmail(form.email)) {
-            
-            if (basket.length == 0) {
-                
-                alert ("Vous ne pouvez pas commander un panier qui est vide, veuillez sélectionner un article au minimum");
-
-            } else {
-
-                // Récupération des srtings articles du panier
-                let products = [];
-
-                basket.forEach(itemBasket => products.push(itemBasket.id));
-                //---------------------------------------------
-
-
-                // Récupération du formulaire
-                let contact = {
-                    firstName: form.firstName.value,
-                    lastName: form.lastName.value,
-                    address: form.address.value,
-                    city: form.city.value,
-                    email: form.email.value
-                };
-   
-                fetch('http://localhost:3000/api/cameras/order',
-                {
-                    method: 'POST',
-                    headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({contact, products})
-                })
-                .then(response => response.json())
-                .then(response => {
-
-                    let objetRetour = response;
-
-                    console.log(objetRetour["orderId"]);
-                    localStorage.setItem("orderKey", objetRetour["orderId"]);
-                    
-                    let totaldupanier = document.querySelector(".totalPanierN");
-                    localStorage.setItem("totalKey", totaldupanier.textContent);
-
-
-                    alert("Veuillez cliquer sur OK pour comfirmer votre commande.");
-                    location.replace("../html/confirmation.html");
-                })
-                .catch(function(error){
-
-                    console.log(error)
-
-                })
-            }
-
-        } else {
-
-            if (basket.length == 0) {
-                alert ("Votre panier est vide, veuillez sélectionner au moins un article et le formulaire n'est pas correctement rempli");
-            } else {
-                alert ("Le formulaire n'est pas correctement rempli");
-            }
-        } 
-    });
-}
 
 // REGEX pour formulaire
 function validEmail(inputEmail) {
@@ -584,11 +551,15 @@ function restoreHome() {
     
 }
 
+function formatPrice(price) {
+    return (price / 100).toFixed(2)
+}
+
 /********************************************************/
 
 
 /********************************************************
-*** GESTION 
+*** GESTION INITIALIZE
 *********************************************************/
 
 function initialize() {
