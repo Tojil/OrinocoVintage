@@ -250,7 +250,7 @@ function pageBasket() {
       let i = 0
 
       for (i; i < numOfArticles; i++) {
-          let artPanier = document.querySelector(".listeProducts", ".articles-panier-beta");
+          let artPanier = document.querySelector(".listeProducts");
           artPanier.innerHTML += 
           `<div class="delete" id=${i} onclick="deleteItem(id)"><i class="fas fa-trash-alt"></i></div>`;
           artPanier.classList.add("articles-panier");
@@ -262,12 +262,12 @@ function pageBasket() {
   const arrayAllPrices = Array.from(allPrices)
 
   const nbPrices = arrayAllPrices.length
-  let j = 0;
+  let totalPanier = 0;
   
-  for (j; j < nbPrices; j++) {
-      let strBasis = arrayAllPrices[j].textContent;
-      let newStrBasis = strBasis.substring(0, strBasis.length - 1);
-      let convertStrInNum = parseInt(newStrBasis);
+  for (let p = 0; p < nbPrices; p++) {
+      let strBasis = arrayAllPrices[p].textContent;
+      //let newStrBasis = strBasis.substring(0, strBasis.length - 1);
+      let convertStrInNum = parseInt(strBasis);
 
       totalPanier += convertStrInNum;
   }
@@ -275,7 +275,7 @@ function pageBasket() {
   const affichageTotal = document.querySelector("#panierTotaux");
   let blocTotal = document.createElement("div");
   blocTotal.innerHTML =
-  `<span>TOTAL :</span><span class="totalPanierN"> ${j} €</span>`;
+  `<span>TOTAL :</span><span class="totalPanierN"> ${totalPanier} €</span>`;
 
   affichageTotal.appendChild(blocTotal);
 
