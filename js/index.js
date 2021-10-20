@@ -138,7 +138,7 @@ function addLenses(value) {
         `<option class="optionLenses" value="${value.lenses[nbLenses]}">${value.lenses[nbLenses]}</option>`
     };
 }
-
+// Creation du panier
 function createBasket() {
 
   if (localStorage.getItem('basketKey') == null) {
@@ -258,7 +258,7 @@ function sendForm(e) {
         }
     }
 }
-
+// Creation de la page panier
 function pageBasket() {
 
   // creer variable avec basketKey qui se trouve dans localStorage
@@ -294,7 +294,7 @@ function pageBasket() {
   document.querySelector("button").addEventListener('click', sendForm);
 
   addButtonDelete();
-
+// Ajoute l'icon poubelle 
   function addButtonDelete() {
 
       numOfArticles = basket.length;
@@ -316,6 +316,7 @@ function pageBasket() {
       totalPanier += (basket[i].price * basket[i].quantity);
   }
   
+  // Ajoute le prix total du panier
   const affichageTotal = document.querySelector("#panierTotaux");
   let blocTotal = document.createElement("div");
   blocTotal.innerHTML =
@@ -325,6 +326,7 @@ function pageBasket() {
   
 }
 
+// Elimine le produit du panier 
 function deleteItem(indexDel) {
 
   let basketForDel = JSON.parse(localStorage.getItem("basketKey"));
@@ -338,10 +340,7 @@ function deleteItem(indexDel) {
   
 }
 
-// Envoie du formulaire panier après validation
-
 let form = document.querySelector("#contact")
-
 
 
 // REGEX pour formulaire
@@ -507,7 +506,7 @@ function verifForm() {
 *** GESTION DE LA PAGE DE CORFIRMATION
 *********************************************************/
 
-
+// Envoie le message de confirmation avec le total et le numero de commande
 function messageOrder() {
     
     localStorage.removeItem("basketKey");
@@ -536,7 +535,7 @@ function messageOrder() {
     restoreHome()
     
 }
-
+// Retabli le panier à cero
 function restoreHome() {
 
     let buttonBack = document.querySelector("button");
