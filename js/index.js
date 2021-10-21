@@ -2,20 +2,23 @@
 *** GESTION DE LA PAGE D'ACCUEIL
 *********************************************************/
 
-// Dans index.html appel reseaux et affichage des cameras
 
+// Variables
 let contain = document.getElementById("camera-container")
 let mainArticle = document.getElementById("main_Item")
 const urlApi = "http://localhost:3000/api/cameras";
 let currentProduct = undefined;
 
+// Dans index.html appel reseaux et affichage des cameras
 function getAllCameras() {
     fetch(urlApi)
+    // Promise
     .then(function(res) {
       if (res.ok) {
         return res.json();
       }
     })
+    // Promise
     .then(function(value) {
       let camerasCount = value.length
       for(let i = 0; i < camerasCount; i++) {
@@ -83,7 +86,7 @@ function addToBasket(event) {
   indicatorNbOfItemInBasket();
 }
 
-// Dans product.html appel reseaux et affichage d'une seule camera
+// Dans product.html appel reseaux recupere l'id du produit et affichage d'une seule camera
 function getProduct() {
   let queryParams = window.location.search.substr(1).split("&");
   let paramIdIndex = queryParams.findIndex(value => value.split("=")[0] == "id");
@@ -186,7 +189,10 @@ function indicatorNbOfItemInBasket() {
 /********************************************************
 *** GESTION DE LA PAGE BASKET
 *********************************************************/
-
+ /**
+  * 
+  * @param {*} e 
+  */
 function sendForm(e) {
     e.preventDefault();
 
